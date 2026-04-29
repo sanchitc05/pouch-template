@@ -2318,6 +2318,10 @@
             "heading_3": {
               "label": "Heading",
               "default": "Heading"
+            },
+            "content": {
+              "label": "Content",
+              "info": "Leave blank to hide this pairing"
             }
           }
         }
