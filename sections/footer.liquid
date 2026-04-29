@@ -27,6 +27,259 @@
   }
 {%- endstyle -%}
 
+<style>
+  .footer {
+    display: none !important;
+  }
+
+  .pouch-site-footer {
+    background: #111427;
+    color: #fff;
+    padding: clamp(4.8rem, 7vw, 8rem) 0 3rem;
+  }
+
+  .pouch-site-footer__inner {
+    width: min(100% - 3.2rem, 1320px);
+    margin-inline: auto;
+    display: grid;
+    gap: 2.4rem;
+  }
+
+  .pouch-site-footer__newsletter {
+    display: grid;
+    gap: 1.2rem;
+    max-width: 76rem;
+  }
+
+  .pouch-site-footer__title {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(4rem, 5vw, 7.8rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  .pouch-site-footer__copy {
+    margin: 0;
+    font-size: clamp(1.6rem, 1.8vw, 2rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 58rem;
+  }
+
+  .pouch-site-footer__form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .pouch-site-footer__row {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pouch-site-footer__field,
+  .pouch-site-footer__email {
+    width: 100%;
+    min-height: 5.2rem;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    padding: 0 1.5rem;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pouch-site-footer__email::placeholder {
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  .pouch-site-footer__submit {
+    min-height: 5.2rem;
+    border-radius: 1.2rem;
+    background: #fff;
+    color: #111427;
+    border: 0;
+  }
+
+  .pouch-site-footer__checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .pouch-site-footer__columns {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pouch-site-footer__column {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding-top: 1rem;
+  }
+
+  .pouch-site-footer__column summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .pouch-site-footer__column summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pouch-site-footer__column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .pouch-site-footer__column a {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .pouch-site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: var(--font-mono, monospace);
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .pouch-site-footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  @media (max-width: 989px) {
+    .pouch-site-footer__columns {
+      grid-template-columns: 1fr;
+    }
+
+    .pouch-site-footer__row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .pouch-site-footer__inner {
+      width: min(100% - 2rem, 1320px);
+    }
+
+    .pouch-site-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<footer class="pouch-site-footer">
+  <div class="pouch-site-footer__inner">
+    <div class="pouch-site-footer__newsletter">
+      <p class="pouch-eyebrow" style="color: rgba(255,255,255,.76); margin-bottom: 0;">Inside POUCH</p>
+      <h2 class="pouch-site-footer__title">
+        Sign up for 10% off your first purchase and early access to launches, news, and offers.
+      </h2>
+      {%- form 'customer', id: 'PouchFooterNewsletter', class: 'pouch-site-footer__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="pouch-site-footer__row">
+          <input
+            class="pouch-site-footer__field"
+            type="text"
+            name="contact[first_name]"
+            placeholder="First Name"
+            autocomplete="given-name"
+          >
+          <input
+            class="pouch-site-footer__field"
+            type="text"
+            name="contact[last_name]"
+            placeholder="Last Name"
+            autocomplete="family-name"
+          >
+        </div>
+        <div class="pouch-site-footer__row">
+          <input
+            class="pouch-site-footer__email"
+            type="email"
+            name="contact[email]"
+            placeholder="Email Address"
+            aria-required="true"
+            required
+            autocomplete="email"
+          >
+          <button class="button pouch-site-footer__submit" type="submit">Sign up</button>
+        </div>
+        <label class="pouch-site-footer__checkbox">
+          <input type="checkbox" checked>
+          <span>POUCH can contact me via email about promotions and content.</span>
+        </label>
+      {%- endform -%}
+    </div>
+
+    <div class="pouch-site-footer__columns">
+      <details class="pouch-site-footer__column" open>
+        <summary>01 / Customer Service <span>+</span></summary>
+        <ul>
+          <li><a href="/pages/frequently-asked-questions.html">FAQs</a></li>
+          <li><a href="/pages/delivery-returns.html">Delivery</a></li>
+          <li><a href="/pages/delivery-returns.html">Returns</a></li>
+          <li><a href="https://drinkpouch.com/tools/recurring/login">Manage Subscriptions</a></li>
+        </ul>
+      </details>
+
+      <details class="pouch-site-footer__column" open>
+        <summary>02 / Legal <span>+</span></summary>
+        <ul>
+          <li><a href="/pages/terms-conditions.html">Terms &amp; Conditions</a></li>
+          <li><a href="/pages/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="/pages/privacy-policy.html">Cookie Policy</a></li>
+          <li><a href="/pages/contact.html">Contact</a></li>
+        </ul>
+      </details>
+
+      <details class="pouch-site-footer__column" open>
+        <summary>03 / Follow <span>+</span></summary>
+        <ul>
+          <li><a href="https://www.instagram.com/drink_pouch/">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@drink_pouch?is_from_webapp=1&amp;sender_device=pc">TikTok</a></li>
+          <li><a href="https://www.facebook.com/61575818502153">Facebook</a></li>
+          <li><a href="https://www.linkedin.com/company/drinkpouch">LinkedIn</a></li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="pouch-site-footer__bottom">
+      <span>©2026 /</span>
+      <a href="{{ routes.root_url }}">Drink POUCH</a>
+      <div class="pouch-site-footer__social"></div>
+    </div>
+  </div>
+</footer>
+
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
   {%- liquid
     assign has_social_icons = true

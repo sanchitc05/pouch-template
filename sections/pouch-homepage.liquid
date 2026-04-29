@@ -1,0 +1,1148 @@
+{%- liquid
+  assign pouch_blog = blogs['101']
+-%}
+
+<style>
+  .pouch-homepage {
+    --pouch-navy: #10142a;
+    --pouch-blue: #233a72;
+    --pouch-blue-2: #1d2f64;
+    --pouch-cream: #f4efe8;
+    --pouch-cream-2: #ede6dc;
+    --pouch-ink: #18151f;
+    --pouch-muted: rgba(24, 21, 31, 0.72);
+    --pouch-white: #fffdf8;
+    --pouch-border: rgba(17, 20, 34, 0.1);
+    background: var(--pouch-cream);
+    color: var(--pouch-ink);
+    overflow: clip;
+  }
+
+  .pouch-homepage a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pouch-section {
+    padding: clamp(4.8rem, 7vw, 9.6rem) 0;
+  }
+
+  .pouch-container {
+    width: min(100% - 3.2rem, 1280px);
+    margin-inline: auto;
+  }
+
+  .pouch-eyebrow {
+    margin: 0 0 1.2rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    opacity: 0.78;
+  }
+
+  .pouch-display {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .pouch-title {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+  }
+
+  .pouch-copy {
+    font-size: clamp(1.65rem, 1.7vw, 2.1rem);
+    line-height: 1.5;
+    max-width: 62rem;
+    color: var(--pouch-muted);
+  }
+
+  .pouch-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 4.8rem;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: var(--font-mono, monospace);
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+
+  .pouch-link:hover {
+    transform: translateY(-1px);
+  }
+
+  .pouch-link__arrow {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: inline-block;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-top: -0.1rem;
+  }
+
+  .pouch-hero {
+    position: relative;
+    min-height: 92svh;
+    display: flex;
+    align-items: flex-end;
+    background: radial-gradient(circle at 22% 38%, rgba(74, 100, 255, 0.34) 0, rgba(74, 100, 255, 0) 17%),
+      radial-gradient(circle at 52% 55%, rgba(75, 102, 255, 0.28) 0, rgba(75, 102, 255, 0) 16%),
+      radial-gradient(circle at 74% 41%, rgba(77, 104, 255, 0.28) 0, rgba(77, 104, 255, 0) 16%),
+      radial-gradient(circle at 63% 69%, rgba(15, 17, 30, 0.95) 0, rgba(15, 17, 30, 0.95) 18%, rgba(15, 17, 30, 0) 33%),
+      linear-gradient(180deg, #6a7591 0%, #1e2e61 35%, #111427 74%, #090a12 100%);
+    color: var(--pouch-white);
+    overflow: clip;
+  }
+
+  .pouch-hero::before,
+  .pouch-hero::after {
+    content: '';
+    position: absolute;
+    inset: auto;
+    border-radius: 50%;
+    filter: blur(0.2px);
+    pointer-events: none;
+  }
+
+  .pouch-hero::before {
+    left: 8%;
+    top: 38%;
+    width: 8rem;
+    height: 8rem;
+    background: radial-gradient(
+      circle at 42% 35%,
+      rgba(221, 229, 255, 0.4) 0,
+      rgba(16, 18, 33, 0.78) 35%,
+      rgba(9, 10, 18, 0.98) 78%
+    );
+    box-shadow: 0 0 70px rgba(32, 54, 111, 0.6);
+  }
+
+  .pouch-hero::after {
+    right: 11%;
+    top: 34%;
+    width: 9rem;
+    height: 9rem;
+    background: radial-gradient(
+      circle at 42% 35%,
+      rgba(221, 229, 255, 0.4) 0,
+      rgba(16, 18, 33, 0.78) 35%,
+      rgba(9, 10, 18, 0.98) 78%
+    );
+    box-shadow: 0 0 80px rgba(32, 54, 111, 0.54);
+  }
+
+  .pouch-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding: 2.4rem 0 2.8rem;
+    width: min(100% - 3.2rem, 1320px);
+    margin-inline: auto;
+  }
+
+  .pouch-hero__logo {
+    position: absolute;
+    top: 3.2rem;
+    left: 1.6rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: clamp(4.6rem, 6vw, 7.8rem);
+    line-height: 0.82;
+    letter-spacing: -0.06em;
+  }
+
+  .pouch-hero__topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.9rem 1.4rem 1.1rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.08em;
+    font-size: 1.05rem;
+    background: rgba(16, 20, 42, 0.55);
+    backdrop-filter: blur(14px);
+  }
+
+  .pouch-hero__icons {
+    position: absolute;
+    top: 3.7rem;
+    right: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.9rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+  }
+
+  .pouch-hero__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  .pouch-hero__icon svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .pouch-hero__content {
+    display: grid;
+    gap: 1.6rem;
+    align-content: end;
+    min-height: 70svh;
+    padding-top: 8rem;
+  }
+
+  .pouch-hero__heading {
+    max-width: 15ch;
+    margin: 0;
+    font-size: clamp(6rem, 11vw, 12rem);
+    color: var(--pouch-white);
+  }
+
+  .pouch-hero__lede {
+    max-width: 23ch;
+    margin: 0;
+    font-size: clamp(1.75rem, 2vw, 2.4rem);
+    line-height: 1.38;
+    color: rgba(255, 253, 248, 0.92);
+  }
+
+  .pouch-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: center;
+    margin-top: 0.8rem;
+  }
+
+  .pouch-hero__label {
+    position: absolute;
+    right: 0;
+    bottom: 3.2rem;
+    margin: 0;
+    font-family: var(--font-mono, monospace);
+    font-size: 1.15rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 248, 0.82);
+  }
+
+  .pouch-section--light {
+    background: var(--pouch-cream);
+  }
+
+  .pouch-products {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.6rem;
+  }
+
+  .pouch-products__intro {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1rem;
+    max-width: 84rem;
+    margin-bottom: 1rem;
+  }
+
+  .pouch-products__grid {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 1.8rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .pouch-product-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--pouch-border);
+    border-radius: 2rem;
+    overflow: clip;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .pouch-product-card__media {
+    aspect-ratio: 1 / 1.15;
+    background: linear-gradient(180deg, rgba(37, 46, 84, 0.08), rgba(17, 20, 34, 0.02));
+    overflow: hidden;
+  }
+
+  .pouch-product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pouch-product-card__body {
+    padding: 1.8rem 1.7rem 1.6rem;
+    display: grid;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .pouch-product-card__line {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .pouch-product-card__name {
+    margin: 0;
+    font-size: 2.7rem;
+  }
+
+  .pouch-product-card__size {
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    opacity: 0.78;
+  }
+
+  .pouch-product-card__tagline {
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.45;
+    color: var(--pouch-muted);
+  }
+
+  .pouch-product-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    opacity: 0.8;
+  }
+
+  .pouch-product-card__ingredients {
+    font-size: 1.18rem;
+    line-height: 1.6;
+    color: var(--pouch-muted);
+    min-height: 4.8rem;
+  }
+
+  .pouch-product-card__footer {
+    padding: 0 1.7rem 1.7rem;
+    margin-top: auto;
+  }
+
+  .pouch-product-card__button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pouch-story {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .pouch-story__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .pouch-story__lead {
+    grid-column: 1 / span 7;
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .pouch-story__lead .pouch-title {
+    font-size: clamp(4rem, 4.8vw, 8rem);
+    max-width: 11ch;
+  }
+
+  .pouch-story__support {
+    grid-column: 8 / -1;
+    display: grid;
+    gap: 1.6rem;
+    padding-top: 1.2rem;
+  }
+
+  .pouch-feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .pouch-feature {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--pouch-border);
+    border-radius: 1.8rem;
+    padding: 1.8rem;
+    min-height: 18rem;
+  }
+
+  .pouch-feature__title {
+    margin: 0 0 0.9rem;
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .pouch-feature__text {
+    margin: 0;
+    color: var(--pouch-muted);
+    line-height: 1.7;
+    font-size: 1.45rem;
+  }
+
+  .pouch-science {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .pouch-science__copy {
+    grid-column: 1 / span 5;
+  }
+
+  .pouch-science__copy .pouch-title {
+    font-size: clamp(4rem, 4.4vw, 7.2rem);
+  }
+
+  .pouch-science__stack {
+    grid-column: 6 / -1;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .pouch-science__row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .pouch-science__panel {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--pouch-border);
+    border-radius: 1.8rem;
+    padding: 1.6rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .pouch-science__panel p {
+    margin: 0;
+  }
+
+  .pouch-sip-vs-drip {
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  .pouch-compare {
+    display: grid;
+    gap: 1.8rem;
+    padding: 2.2rem;
+    background: rgba(255, 255, 255, 0.52);
+    border: 1px solid var(--pouch-border);
+    border-radius: 2.4rem;
+  }
+
+  .pouch-compare__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr 0.85fr;
+    gap: 1rem;
+  }
+
+  .pouch-compare__cell {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(17, 20, 34, 0.08);
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .pouch-compare__head {
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 1.05rem;
+    opacity: 0.78;
+  }
+
+  .pouch-compare__note {
+    margin: 0;
+    color: var(--pouch-muted);
+    font-size: 1.2rem;
+  }
+
+  .pouch-faqs {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .pouch-faq {
+    background: rgba(255, 255, 255, 0.56);
+    border: 1px solid var(--pouch-border);
+    border-radius: 1.8rem;
+    overflow: clip;
+  }
+
+  .pouch-faq summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.8rem 2rem;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  .pouch-faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pouch-faq__plus {
+    font-family: var(--font-mono, monospace);
+    font-size: 2rem;
+  }
+
+  .pouch-faq__content {
+    padding: 0 2rem 2rem;
+    color: var(--pouch-muted);
+    font-size: 1.5rem;
+    line-height: 1.7;
+    max-width: 82rem;
+  }
+
+  .pouch-articles {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .pouch-articles__grid {
+    display: grid;
+    gap: 1.6rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pouch-article {
+    background: rgba(255, 255, 255, 0.56);
+    border: 1px solid var(--pouch-border);
+    border-radius: 2rem;
+    overflow: clip;
+    display: grid;
+  }
+
+  .pouch-article__media {
+    aspect-ratio: 1.32;
+    background: linear-gradient(180deg, rgba(35, 58, 114, 0.12), rgba(35, 58, 114, 0.02));
+  }
+
+  .pouch-article__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pouch-article__body {
+    padding: 1.6rem 1.7rem 1.8rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .pouch-article__title {
+    margin: 0;
+    font-size: 2.2rem;
+    line-height: 1.18;
+  }
+
+  .pouch-article__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 1.05rem;
+  }
+
+  .pouch-article__link .pouch-link__arrow {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .pouch-partition {
+    padding-top: 0;
+  }
+
+  .pouch-card-link {
+    display: block;
+  }
+
+  @media (max-width: 1100px) {
+    .pouch-products__grid,
+    .pouch-science__row,
+    .pouch-articles__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pouch-story__lead,
+    .pouch-story__support,
+    .pouch-science__copy,
+    .pouch-science__stack {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .pouch-section {
+      padding: 4.2rem 0;
+    }
+
+    .pouch-container {
+      width: min(100% - 2rem, 1280px);
+    }
+
+    .pouch-hero {
+      min-height: 100svh;
+    }
+
+    .pouch-hero__inner {
+      width: min(100% - 2rem, 1320px);
+      padding-bottom: 1.8rem;
+    }
+
+    .pouch-hero__logo {
+      font-size: 5rem;
+      top: 4rem;
+      left: 0;
+    }
+
+    .pouch-hero__icons {
+      top: 4.35rem;
+      right: 0;
+      gap: 1rem;
+    }
+
+    .pouch-hero__content {
+      min-height: 74svh;
+      padding-top: 12rem;
+    }
+
+    .pouch-hero__heading {
+      max-width: 10ch;
+    }
+
+    .pouch-products__grid,
+    .pouch-feature-list,
+    .pouch-science__row,
+    .pouch-articles__grid,
+    .pouch-compare__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pouch-compare {
+      padding: 1.7rem;
+    }
+
+    .pouch-compare__cell {
+      padding: 0.9rem 0;
+    }
+
+    .pouch-faq summary {
+      padding: 1.5rem 1.6rem;
+      font-size: 1.75rem;
+    }
+
+    .pouch-faq__content {
+      padding: 0 1.6rem 1.6rem;
+    }
+  }
+</style>
+
+<section class="pouch-homepage">
+  <header class="pouch-hero">
+    <div class="pouch-hero__topbar" aria-hidden="true">
+      <span>Free shipping on orders over $100</span>
+      <span>Mother’s Day Offer on SkinRevive+ • Use code REVIVE15</span>
+    </div>
+
+    <div class="pouch-hero__inner">
+      <div class="pouch-hero__logo">POUCH</div>
+
+      <div class="pouch-hero__icons" aria-label="Header actions">
+        <a href="{{ routes.search_url }}" class="pouch-hero__icon" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M16.25 16.25L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </a>
+        <button
+          class="pouch-hero__icon"
+          type="button"
+          aria-label="Open menu"
+          onclick="document.documentElement.classList.toggle('pouch-menu-open')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            <path d="M4 17.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </button>
+        <a href="{{ routes.cart_url }}" class="pouch-hero__icon" aria-label="Cart"> [{{ cart.item_count }}] </a>
+      </div>
+
+      <div class="pouch-hero__content">
+        <h1 class="pouch-hero__heading">Welcome to Progress</h1>
+        <p class="pouch-hero__lede">Powered by IV-inspired formulas, crafted for high-performers who demand more.</p>
+        <div class="pouch-hero__actions">
+          <a class="pouch-link" href="{{ collections['products'].url | default: routes.all_products_collection_url }}">
+            Explore the Range <span class="pouch-link__arrow" aria-hidden="true"></span>
+          </a>
+          <button class="pouch-link" type="button" aria-disabled="true">Sound: off</button>
+        </div>
+      </div>
+
+      <p class="pouch-hero__label">Drinkable iv formula™</p>
+    </div>
+  </header>
+
+  <section class="pouch-section pouch-section--light">
+    <div class="pouch-container pouch-products">
+      <div class="pouch-products__intro">
+        <p class="pouch-eyebrow">01 / Our formulas</p>
+        <h2 class="pouch-title" style="font-size: clamp(4rem, 5vw, 7.5rem);">Shop by solution</h2>
+        <p class="pouch-copy">
+          Wellness that adapts to you. Each POUCH formula delivers targeted support for hydration, immunity, skin
+          health, and complete wellness so you can choose what your body needs, when it needs it.
+        </p>
+      </div>
+
+      <div class="pouch-products__grid">
+        <article class="pouch-product-card">
+          {%- assign card_product = all_products.immunity -%}
+          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/immunity.html' }}">
+            <div class="pouch-product-card__media">
+              {%- if card_product.featured_image != blank -%}
+                {{
+                  card_product.featured_image
+                  | image_url: width: 900
+                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="pouch-product-card__body">
+              <p class="pouch-eyebrow" style="margin-bottom: 0;">Raspberry Ginger</p>
+              <div class="pouch-product-card__line">
+                <div>
+                  <h3 class="pouch-product-card__name">Immunity+</h3>
+                  <p class="pouch-product-card__tagline">Strengthen, Defend, Thrive</p>
+                </div>
+                <div class="pouch-product-card__size">8.0 oz</div>
+              </div>
+              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
+              <p class="pouch-product-card__ingredients">
+                VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /
+              </p>
+            </div>
+          </a>
+          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
+            <div class="pouch-product-card__footer">
+              {%- form 'product', card_product, class: 'product-form' -%}
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
+                  Add to cart
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </article>
+
+        <article class="pouch-product-card">
+          {%- assign card_product = all_products.hydration -%}
+          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/hydration.html' }}">
+            <div class="pouch-product-card__media">
+              {%- if card_product.featured_image != blank -%}
+                {{
+                  card_product.featured_image
+                  | image_url: width: 900
+                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="pouch-product-card__body">
+              <p class="pouch-eyebrow" style="margin-bottom: 0;">Lemon</p>
+              <div class="pouch-product-card__line">
+                <div>
+                  <h3 class="pouch-product-card__name">Hydration+</h3>
+                  <p class="pouch-product-card__tagline">Cellular Replenishment Formula</p>
+                </div>
+                <div class="pouch-product-card__size">8.0 oz</div>
+              </div>
+              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
+              <p class="pouch-product-card__ingredients">Aquamin™ / Essential Electrolytes / Vitamin C /</p>
+            </div>
+          </a>
+          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
+            <div class="pouch-product-card__footer">
+              {%- form 'product', card_product, class: 'product-form' -%}
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
+                  Add to cart
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </article>
+
+        <article class="pouch-product-card">
+          {%- assign card_product = all_products.skinrevive -%}
+          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/skinrevive.html' }}">
+            <div class="pouch-product-card__media">
+              {%- if card_product.featured_image != blank -%}
+                {{
+                  card_product.featured_image
+                  | image_url: width: 900
+                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="pouch-product-card__body">
+              <p class="pouch-eyebrow" style="margin-bottom: 0;">Peach Chamomile</p>
+              <div class="pouch-product-card__line">
+                <div>
+                  <h3 class="pouch-product-card__name">SkinRevive+</h3>
+                  <p class="pouch-product-card__tagline">Complexion Care Formula</p>
+                </div>
+                <div class="pouch-product-card__size">8.0 oz</div>
+              </div>
+              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
+              <p class="pouch-product-card__ingredients">
+                Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins /
+              </p>
+            </div>
+          </a>
+          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
+            <div class="pouch-product-card__footer">
+              {%- form 'product', card_product, class: 'product-form' -%}
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
+                  Add to cart
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </article>
+
+        <article class="pouch-product-card">
+          {%- assign card_product = all_products.welldrip -%}
+          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/welldrip.html' }}">
+            <div class="pouch-product-card__media">
+              {%- if card_product.featured_image != blank -%}
+                {{
+                  card_product.featured_image
+                  | image_url: width: 900
+                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="pouch-product-card__body">
+              <p class="pouch-eyebrow" style="margin-bottom: 0;">Orange Honey</p>
+              <div class="pouch-product-card__line">
+                <div>
+                  <h3 class="pouch-product-card__name">WellDrip+</h3>
+                  <p class="pouch-product-card__tagline">All-in-One Wellness Formula</p>
+                </div>
+                <div class="pouch-product-card__size">8.0 oz</div>
+              </div>
+              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
+              <p class="pouch-product-card__ingredients">
+                Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc /
+              </p>
+            </div>
+          </a>
+          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
+            <div class="pouch-product-card__footer">
+              {%- form 'product', card_product, class: 'product-form' -%}
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
+                  Add to cart
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pouch-section">
+    <div class="pouch-container pouch-story">
+      <div class="pouch-story__grid">
+        <div class="pouch-story__lead">
+          <p class="pouch-eyebrow">02 / why we exist</p>
+          <h2 class="pouch-title" style="font-size: clamp(4.8rem, 6.5vw, 9.2rem);">
+            We exist to keep you at your peak, reimagining IV therapy into a portable drink that fuels performance,
+            supports recovery, and keeps you sharp. Every day.
+          </h2>
+        </div>
+        <div class="pouch-story__support">
+          <p class="pouch-copy" style="max-width: 44rem;">
+            Science-backed fluids. Real-world performance. Find out how we keep you operating at your peak.
+          </p>
+          <a class="pouch-link" href="/pages/about-us.html"
+            >Discover our approach <span class="pouch-link__arrow" aria-hidden="true"></span
+          ></a>
+        </div>
+      </div>
+
+      <div class="pouch-science">
+        <div class="pouch-science__copy">
+          <p class="pouch-eyebrow">03 / The science</p>
+          <h2 class="pouch-title" style="font-size: clamp(4.2rem, 5vw, 7.6rem);">Drinkable IV Formula™</h2>
+        </div>
+        <div class="pouch-science__stack">
+          <div class="pouch-science__row">
+            <div class="pouch-science__panel">
+              <p class="pouch-product-card__name" style="font-size: 2rem;">IV-Inspired, Everyday Ready</p>
+              <p class="pouch-feature__text">
+                Each POUCH formula mirrors the nutrient profile of popular IV vitamin therapies, delivering hydration,
+                immunity, recovery, and skin health support in a more practical and elegant format.
+              </p>
+            </div>
+            <div class="pouch-science__panel">
+              <p class="pouch-product-card__name" style="font-size: 2rem;">Quality Ingredients, Better Absorption</p>
+              <p class="pouch-feature__text">
+                Every vitamin, mineral, and antioxidant is intentionally selected for its superior bioavailability,
+                ensuring more of what you take in is absorbed and put to work by your body.
+              </p>
+            </div>
+            <div class="pouch-science__panel">
+              <p class="pouch-product-card__name" style="font-size: 2rem;">Targeted Wellness Solutions</p>
+              <p class="pouch-feature__text">
+                Each formula is crafted for a distinct wellness goal, ensuring optimal performance support without
+                making the experience clinical or cumbersome.
+              </p>
+            </div>
+            <div class="pouch-science__panel">
+              <p class="pouch-product-card__name" style="font-size: 2rem;">Advanced Nutrition, Made Accessible</p>
+              <p class="pouch-feature__text">
+                POUCH transforms IV-inspired formulas into portable blends you can sip anywhere, featuring premium
+                ingredients rarely found in drinkable formats.
+              </p>
+            </div>
+          </div>
+          <div class="pouch-products__grid" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+            {%- assign science_cards = 'skinrevive|SkinRevive+|Complexion Care Formula|products/skinrevive.html,immunity|Immunity+|Strengthen, Defend, Thrive|products/immunity.html,hydration|Hydration+|Cellular Replenishment Formula|products/hydration.html,welldrip|WellDrip+|All-in-One Wellness Formula|products/welldrip.html'
+              | split: ','
+            -%}
+            {%- for science_card in science_cards -%}
+              {%- assign science_parts = science_card | split: '|' -%}
+              {%- assign science_product = all_products[science_parts[0]] -%}
+              <article class="pouch-product-card">
+                <a class="pouch-card-link" href="{{ science_product.url | default: science_parts[3] }}">
+                  <div class="pouch-product-card__media">
+                    {%- if science_product.featured_image != blank -%}
+                      {{
+                        science_product.featured_image
+                        | image_url: width: 900
+                        | image_tag: loading: 'lazy', class: 'image-cover', alt: science_product.title
+                      }}
+                    {%- endif -%}
+                  </div>
+                  <div class="pouch-product-card__body">
+                    <p class="pouch-eyebrow" style="margin-bottom: 0;">{{ science_parts[1] }}</p>
+                    <div class="pouch-product-card__line" style="align-items: start;">
+                      <div>
+                        <h3 class="pouch-product-card__name" style="font-size: 2.2rem;">{{ science_parts[1] }}</h3>
+                        <p class="pouch-product-card__tagline">{{ science_parts[2] }}</p>
+                      </div>
+                      <div class="pouch-product-card__size">+</div>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pouch-section pouch-section--light">
+    <div class="pouch-container pouch-sip-vs-drip">
+      <p class="pouch-eyebrow">04 / Medically supported</p>
+      <div class="pouch-feature-list">
+        <div class="pouch-feature">
+          <p class="pouch-feature__title">All formulas are:</p>
+          <p class="pouch-feature__text">
+            01 / non-gmo<br>
+            02 / gluten free<br>
+            03 / vegan<br>
+            04 / zero sugar<br>
+            05 / no artificial sweeteners
+          </p>
+        </div>
+        <div class="pouch-feature">
+          <p class="pouch-feature__title">Brooke Aaron, MS, RDN, LDN</p>
+          <p class="pouch-feature__text">
+            “POUCH reimagines the benefits of IV therapy in an oral, fast-absorbing format. It delivers highly
+            bioavailable nutrients that fuel cellular health, support hydration, and enhance cognitive performance.”
+          </p>
+        </div>
+      </div>
+      <a class="pouch-link" href="{{ collections['products'].url | default: routes.all_products_collection_url }}"
+        >Explore our formulas <span class="pouch-link__arrow" aria-hidden="true"></span
+      ></a>
+
+      <div class="pouch-compare">
+        <div>
+          <p class="pouch-eyebrow" style="margin-bottom: 0.7rem;">06 / VarietyPack+</p>
+          <h2 class="pouch-title" style="font-size: clamp(4rem, 4.7vw, 7rem);">One pack. Every formula.</h2>
+          <p class="pouch-copy">
+            Twelve pouches. Four targeted blends. Your complete supply of hydration, immune support, skin nourishment,
+            and total-body wellness.
+          </p>
+        </div>
+        <div class="pouch-compare__grid">
+          <div class="pouch-compare__head">Formulas</div>
+          <div class="pouch-compare__head">Sip</div>
+          <div class="pouch-compare__head">Drip</div>
+        </div>
+        <p class="pouch-compare__note">
+          *POUCH is a dietary supplement, not a medical treatment. Use as directed or as advised by a healthcare
+          professional.
+        </p>
+      </div>
+
+      <div class="pouch-faqs">
+        <p class="pouch-eyebrow">08 / FAQs</p>
+        <details class="pouch-faq" open>
+          <summary>How often can I drink POUCH products? <span class="pouch-faq__plus">+</span></summary>
+          <div class="pouch-faq__content">
+            Frequency of use depends on your needs and goals: WellDrip+, SkinRevive+, and Immunity+: we recommend one
+            POUCH daily, or as directed by your healthcare professional. Hydration+: 1–2 pouches daily, or as desired.
+            This formula can be enjoyed anytime, but is especially effective after exercise or heat exposure.
+          </div>
+        </details>
+        <details class="pouch-faq">
+          <summary>Do POUCH products need to be refrigerated? <span class="pouch-faq__plus">+</span></summary>
+          <div class="pouch-faq__content">
+            No. POUCH products are shelf-stable and built to move with you, from gym bag to suitcase to desk drawer.
+            While refrigeration isn’t required, we recommend enjoying them chilled for the best taste experience.
+          </div>
+        </details>
+        <details class="pouch-faq">
+          <summary>Are POUCH formulas third-party tested? <span class="pouch-faq__plus">+</span></summary>
+          <div class="pouch-faq__content">
+            Yes. All POUCH formulas are third-party tested for nutritional content and label accuracy, heavy metals, and
+            shelf life.
+          </div>
+        </details>
+        <details class="pouch-faq">
+          <summary>How can a drinkable product compare to IV therapy? <span class="pouch-faq__plus">+</span></summary>
+          <div class="pouch-faq__content">
+            IV therapy is effective because it bypasses digestion and delivers nutrients directly into the bloodstream.
+            POUCH is IV-inspired in that each formula mirrors the nutrient profile of IV vitamin therapies, uses highly
+            bioavailable ingredients, and supports immunity, recovery, skin health, and performance in a practical,
+            daily format.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pouch-section">
+    <div class="pouch-container pouch-articles">
+      <p class="pouch-eyebrow">09 / Pouch 101</p>
+      <div class="pouch-articles__grid">
+        {%- if pouch_blog != blank and pouch_blog.articles['benefits-drinkable-iv-therapy'] != blank -%}
+          {%- assign article_one = pouch_blog.articles['benefits-drinkable-iv-therapy'] -%}
+          <a class="pouch-article" href="{{ article_one.url }}">
+            <div class="pouch-article__media">
+              {{
+                article_one.image
+                | image_url: width: 1100
+                | image_tag: loading: 'lazy', class: 'image-cover', alt: article_one.title
+              }}
+            </div>
+            <div class="pouch-article__body">
+              <h3 class="pouch-article__title">Meet POUCH: Drinkable IV Formula™</h3>
+              <span class="pouch-article__link"
+                >Read more <span class="pouch-link__arrow" aria-hidden="true"></span
+              ></span>
+            </div>
+          </a>
+        {%- endif -%}
+        {%- if pouch_blog != blank and pouch_blog.articles['myers-cocktail'] != blank -%}
+          {%- assign article_two = pouch_blog.articles['myers-cocktail'] -%}
+          <a class="pouch-article" href="{{ article_two.url }}">
+            <div class="pouch-article__media">
+              {{
+                article_two.image
+                | image_url: width: 1100
+                | image_tag: loading: 'lazy', class: 'image-cover', alt: article_two.title
+              }}
+            </div>
+            <div class="pouch-article__body">
+              <h3 class="pouch-article__title">What is a Myers’ Cocktail?</h3>
+            </div>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+</section>
+
+{% schema %}
+{
+  "name": "POUCH homepage",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "POUCH homepage"
+    }
+  ]
+}
+{% endschema %}

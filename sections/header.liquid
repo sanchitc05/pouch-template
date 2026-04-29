@@ -1,7 +1,12 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+<link
+  rel="stylesheet"
+  href="{{ 'component-cart-notification.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -10,7 +15,6 @@
 {%- if section.settings.menu_type_desktop == 'mega' -%}
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
-
 
 <style>
   header-drawer {
@@ -114,7 +118,294 @@
   endif
 %}
 
-<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+<style>
+  .header-wrapper {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+  }
+
+  .header-wrapper .header,
+  .header-wrapper .header__icons,
+  .header-wrapper .header__inline-menu,
+  .header-wrapper .desktop-localization-wrapper,
+  .header-wrapper .menu-drawer-container,
+  .header-wrapper .header__heading,
+  .header-wrapper .header__search,
+  .header-wrapper .header__icon,
+  .header-wrapper .header__localization,
+  .header-wrapper .header-localization,
+  .header-wrapper header-drawer,
+  .header-wrapper sticky-header,
+  .header-wrapper .header__heading-link,
+  .header-wrapper .header__submenu,
+  .header-wrapper .header__menu-item,
+  .header-wrapper .header__menu-item span,
+  .header-wrapper .header__menu-item a {
+    display: none !important;
+  }
+
+  .pouch-site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(15, 19, 38, 0.94), rgba(15, 19, 38, 0.62));
+    backdrop-filter: blur(16px);
+  }
+
+  .pouch-site-header__announcement {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    background: rgba(15, 19, 38, 0.9);
+  }
+
+  .pouch-site-header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    width: min(100% - 3.2rem, 1320px);
+    margin: 0 auto;
+    padding: 2.2rem 0 1.8rem;
+  }
+
+  .pouch-site-header__logo {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 16rem;
+  }
+
+  .pouch-site-header__logo img {
+    display: block;
+    width: auto;
+    max-width: 18rem;
+    max-height: 4.2rem;
+  }
+
+  .pouch-site-header__logo-text {
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(4rem, 5vw, 7rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+  }
+
+  .pouch-site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  .pouch-site-header__nav a,
+  .pouch-site-header__icons a,
+  .pouch-site-header__icons button {
+    color: inherit;
+  }
+
+  .pouch-site-header__icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.8rem;
+    min-width: 16rem;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+  }
+
+  .pouch-site-header__icons .icon,
+  .pouch-site-header__menu-button {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .pouch-site-header__menu-button {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pouch-site-header__mobile-nav {
+    display: none;
+  }
+
+  .pouch-site-header__drawer {
+    display: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 1.5rem 0 2rem;
+    width: min(100% - 3.2rem, 1320px);
+    margin: 0 auto;
+  }
+
+  .pouch-site-header__drawer nav {
+    display: grid;
+    gap: 0.9rem;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+  }
+
+  .pouch-site-header__drawer a {
+    padding: 0.3rem 0;
+  }
+
+  .pouch-site-header.is-menu-open .pouch-site-header__drawer {
+    display: grid;
+  }
+
+  @media (max-width: 989px) {
+    .pouch-site-header__bar {
+      padding: 1.8rem 0 1.5rem;
+    }
+
+    .pouch-site-header__nav {
+      display: none;
+    }
+
+    .pouch-site-header__mobile-nav {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .pouch-site-header__bar {
+      width: min(100% - 2rem, 1320px);
+      gap: 1rem;
+    }
+
+    .pouch-site-header__logo {
+      min-width: auto;
+    }
+
+    .pouch-site-header__icons {
+      min-width: auto;
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var header = document.querySelector('.pouch-site-header');
+    if (!header) return;
+    var menuButton = header.querySelector('[data-pouch-header-menu]');
+    if (!menuButton) return;
+    menuButton.addEventListener('click', function () {
+      header.classList.toggle('is-menu-open');
+    });
+  });
+</script>
+
+<div class="pouch-site-header">
+  <div class="pouch-site-header__announcement" aria-label="Promotions">
+    <span>Free shipping on orders over $100</span>
+    <span>Mother’s Day Offer on SkinRevive+ • Use code REVIVE15</span>
+  </div>
+  <div class="pouch-site-header__bar">
+    <a class="pouch-site-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {%- if settings.logo != blank -%}
+        {%- assign pouch_logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {{ settings.logo | image_url: width: 600 | image_tag: class: 'motion-reduce', alt: pouch_logo_alt }}
+      {%- else -%}
+        <span class="pouch-site-header__logo-text">POUCH</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="pouch-site-header__nav" aria-label="Main navigation">
+      <a href="{{ routes.all_products_collection_url }}">Shop</a>
+      <a href="/pages/magda-linette.html">Pouch X Magda</a>
+      <a href="/pages/about-us.html">About</a>
+      <a href="/blogs/101.html">Pouch 101</a>
+      <a href="/pages/frequently-asked-questions.html">FAQs</a>
+    </nav>
+
+    <div class="pouch-site-header__icons">
+      <a href="{{ routes.search_url }}" class="pouch-site-header__icon" aria-label="Search">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"></circle>
+          <path d="M16.25 16.25L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </a>
+      <button
+        class="pouch-site-header__menu-button pouch-site-header__mobile-nav"
+        type="button"
+        data-pouch-header-menu
+        aria-label="Toggle navigation"
+      >
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          <path d="M4 17.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <a href="{{ routes.cart_url }}" aria-label="Cart">[{{ cart.item_count }}]</a>
+      {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+        <details>
+          <summary style="cursor:pointer; list-style:none;">en •</summary>
+          <div style="position:absolute; right:1.6rem; top:100%; background:#111427; padding:1.2rem; border:1px solid rgba(255,255,255,.12); border-radius:1rem; min-width:18rem; margin-top:1rem; z-index:4;">
+            {%- if localization.available_countries.size > 1 -%}
+              {%- form 'localization', id: 'PouchHeaderCountryForm', class: 'localization-form' -%}
+                <div style="margin-bottom:1rem;">
+                  <h2 class="visually-hidden">Country</h2>
+                  {%- render 'country-localization', localPosition: 'PouchHeaderCountry' -%}
+                </div>
+              {%- endform -%}
+            {%- endif -%}
+            {%- if localization.available_languages.size > 1 -%}
+              {%- form 'localization', id: 'PouchHeaderLanguageForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden">Language</h2>
+                  {%- render 'language-localization', localPosition: 'PouchHeaderLanguage' -%}
+                </div>
+              {%- endform -%}
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="pouch-site-header__drawer">
+    <nav aria-label="Mobile navigation">
+      <a href="{{ routes.all_products_collection_url }}">Shop</a>
+      <a href="/pages/magda-linette.html">Pouch X Magda</a>
+      <a href="/pages/about-us.html">About</a>
+      <a href="/blogs/101.html">Pouch 101</a>
+      <a href="/pages/frequently-asked-questions.html">FAQs</a>
+      <a href="{{ routes.account_url }}">Account</a>
+    </nav>
+  </div>
+</div>
+
+<{{ header_tag }}
+  {% if header_tag == 'sticky-header' %}
+    data-sticky-type="{{ section.settings.sticky_header_type }}"
+  {% endif %}
+  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+>
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -142,27 +433,30 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo motion-reduce',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
+      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+        {%- if settings.logo != blank -%}
+          <div class="header__heading-logo-wrapper">
+            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+            {{
+              settings.logo
+              | image_url: width: 600
+              | image_tag:
+                class: 'header__heading-logo motion-reduce',
+                widths: widths,
+                height: logo_height,
+                width: settings.logo_width,
+                alt: logo_alt,
+                sizes: sizes,
+                preload: true
+            }}
+          </div>
+        {%- else -%}
+          <span class="h2">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
@@ -182,27 +476,30 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
+      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+        {%- if settings.logo != blank -%}
+          <div class="header__heading-logo-wrapper">
+            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+            {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+            {{
+              settings.logo
+              | image_url: width: 600
+              | image_tag:
+                class: 'header__heading-logo',
+                widths: widths,
+                height: logo_height,
+                width: settings.logo_width,
+                alt: logo_alt,
+                sizes: sizes,
+                preload: true
+            }}
+          </div>
+        {%- else -%}
+          <span class="h2">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
@@ -271,11 +568,11 @@
       {%- endfor -%}
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-          {% if cart == empty %}
-            <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
-          {% else %}
-            <span class="svg-wrapper">{{'icon-cart.svg' | inline_asset_content }}</span>
-          {% endif %}
+        {% if cart == empty %}
+          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+        {% else %}
+          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+        {% endif %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
           <div class="cart-count-bubble">
@@ -290,8 +587,11 @@
   </header>
 </{{ header_tag }}>
 
-{%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+{%- if settings.cart_type == 'notification' -%}
+  {%- render 'cart-notification',
+    color_scheme: section.settings.color_scheme,
+    desktop_menu_type: section.settings.menu_type_desktop
+  -%}
 {%- endif -%}
 
 {% javascript %}
@@ -302,7 +602,9 @@
 
     connectedCallback() {
       this.header = document.querySelector('.section-header');
-      this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
+      this.headerIsAlwaysSticky =
+        this.getAttribute('data-sticky-type') === 'always' ||
+        this.getAttribute('data-sticky-type') === 'reduce-logo-size';
       this.headerBounds = {};
 
       this.setHeaderHeight();
@@ -311,14 +613,14 @@
 
       if (this.headerIsAlwaysSticky) {
         this.header.classList.add('shopify-section-header-sticky');
-      };
+      }
 
       this.currentScrollTop = 0;
       this.preventReveal = false;
       this.predictiveSearch = this.querySelector('predictive-search');
 
       this.onScrollHandler = this.onScroll.bind(this);
-      this.hideHeaderOnScrollUp = () => this.preventReveal = true;
+      this.hideHeaderOnScrollUp = () => (this.preventReveal = true);
 
       this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
       window.addEventListener('scroll', this.onScrollHandler, false);
@@ -394,7 +696,7 @@
 
     closeMenuDisclosure() {
       this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
-      this.disclosures.forEach(disclosure => disclosure.close());
+      this.disclosures.forEach((disclosure) => disclosure.close());
     }
 
     closeSearchModal() {
@@ -430,7 +732,7 @@
 </script>
 
 {%- if request.page_type == 'index' -%}
-  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+  {% assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' %}
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -492,7 +794,7 @@
       ],
       "default": "center",
       "label": "t:sections.header.settings.mobile_logo_position.label"
-    },    
+    },
     {
       "type": "link_list",
       "id": "menu",
@@ -574,14 +876,14 @@
       "id": "enable_country_selector",
       "default": true,
       "label": "t:sections.header.settings.enable_country_selector.label",
-      "info":"t:sections.header.settings.enable_country_selector.info"
+      "info": "t:sections.header.settings.enable_country_selector.info"
     },
     {
       "type": "checkbox",
       "id": "enable_language_selector",
       "default": true,
       "label": "t:sections.header.settings.enable_language_selector.label",
-      "info":"t:sections.header.settings.enable_language_selector.info"
+      "info": "t:sections.header.settings.enable_language_selector.info"
     },
     {
       "type": "checkbox",
