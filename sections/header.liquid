@@ -125,6 +125,7 @@
     box-shadow: none !important;
     margin-bottom: 0 !important;
     padding: 0 !important;
+    display: none !important;
   }
 
   .header-wrapper .header,
@@ -152,8 +153,8 @@
     top: 0;
     z-index: 50;
     color: #fff;
-    background: linear-gradient(180deg, rgba(15, 19, 38, 0.94), rgba(15, 19, 38, 0.62));
-    backdrop-filter: blur(16px);
+    background: linear-gradient(180deg, rgba(15, 19, 38, 0.94), rgba(15, 19, 38, 0.7));
+    backdrop-filter: blur(18px);
   }
 
   .pouch-site-header__announcement {
@@ -162,12 +163,13 @@
     gap: 0.15rem;
     align-items: center;
     justify-content: center;
-    padding: 0.65rem 1.5rem;
+    min-height: 4.6rem;
+    padding: 0.55rem 1.5rem;
     text-align: center;
     text-transform: uppercase;
     font-family: var(--font-mono, monospace);
-    font-size: 1rem;
-    letter-spacing: 0.12em;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
     background: rgba(15, 19, 38, 0.9);
   }
 
@@ -175,10 +177,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.6rem;
+    gap: 2rem;
     width: min(100% - 3.2rem, 1320px);
     margin: 0 auto;
-    padding: 2.2rem 0 1.8rem;
+    padding: 2rem 0 1.8rem;
   }
 
   .pouch-site-header__logo {
@@ -186,51 +188,53 @@
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    min-width: 16rem;
+    min-width: 14rem;
+    min-height: 16rem;
+    align-self: flex-start;
   }
 
   .pouch-site-header__logo img {
     display: block;
     width: auto;
-    max-width: 18rem;
-    max-height: 4.2rem;
+    max-width: 100%;
+    max-height: 14rem;
+    object-fit: contain;
   }
 
   .pouch-site-header__logo-text {
+    display: inline-block;
     color: #fff;
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: clamp(4rem, 5vw, 7rem);
-    line-height: 0.8;
-    letter-spacing: -0.06em;
+    font-size: clamp(4.8rem, 5vw, 7.8rem);
+    line-height: 0.75;
+    letter-spacing: -0.08em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transform-origin: center;
   }
 
-  .pouch-site-header__nav {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-transform: uppercase;
-    font-family: var(--font-mono, monospace);
-    font-size: 1.2rem;
-    letter-spacing: 0.12em;
-    text-align: center;
-  }
-
-  .pouch-site-header__nav a,
   .pouch-site-header__icons a,
   .pouch-site-header__icons button {
     color: inherit;
+  }
+
+  .pouch-site-header__icon-link:hover,
+  .pouch-site-header__icon-link:focus-visible,
+  .pouch-site-header__lang-toggle:hover,
+  .pouch-site-header__lang-toggle:focus-visible {
+    opacity: 0.72;
   }
 
   .pouch-site-header__icons {
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 1.8rem;
-    min-width: 16rem;
+    gap: 1.5rem;
+    min-width: 29rem;
     font-family: var(--font-mono, monospace);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #f6f2ea;
   }
 
   .pouch-site-header__icons .icon,
@@ -239,86 +243,75 @@
     height: 2.4rem;
   }
 
-  .pouch-site-header__menu-button {
-    background: transparent;
-    border: 0;
-    color: inherit;
-    padding: 0;
+  .pouch-site-header__icon-link,
+  .pouch-site-header__lang-toggle,
+  .pouch-site-header__cart-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    white-space: nowrap;
   }
 
-  .pouch-site-header__mobile-nav {
-    display: none;
+  .pouch-site-header__lang-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #1f49ff;
+    box-shadow: 0 0 0 0.2rem rgba(31, 73, 255, 0.16);
   }
 
-  .pouch-site-header__drawer {
-    display: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    padding: 1.5rem 0 2rem;
-    width: min(100% - 3.2rem, 1320px);
-    margin: 0 auto;
+  .pouch-site-header__cart-count {
+    display: inline-flex;
+    align-items: center;
   }
 
-  .pouch-site-header__drawer nav {
-    display: grid;
-    gap: 0.9rem;
-    text-transform: uppercase;
-    font-family: var(--font-mono, monospace);
-    letter-spacing: 0.12em;
+  .pouch-site-header__account-link,
+  .pouch-site-header__cart-link {
+    text-decoration: none;
   }
 
-  .pouch-site-header__drawer a {
-    padding: 0.3rem 0;
-  }
-
-  .pouch-site-header.is-menu-open .pouch-site-header__drawer {
-    display: grid;
+  .pouch-site-header__search-label,
+  .pouch-site-header__account-label,
+  .pouch-site-header__cart-label,
+  .pouch-site-header__lang-label {
+    font-size: 1rem;
+    line-height: 1;
   }
 
   @media (max-width: 989px) {
     .pouch-site-header__bar {
       padding: 1.8rem 0 1.5rem;
-    }
-
-    .pouch-site-header__nav {
-      display: none;
-    }
-
-    .pouch-site-header__mobile-nav {
-      display: inline-flex;
+      gap: 1rem;
     }
   }
 
   @media (max-width: 749px) {
     .pouch-site-header__bar {
       width: min(100% - 2rem, 1320px);
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .pouch-site-header__logo {
       min-width: auto;
+      min-height: 11rem;
     }
 
     .pouch-site-header__icons {
       min-width: auto;
-      gap: 1rem;
+      gap: 0.9rem;
+      letter-spacing: 0.1em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pouch-site-header__icons .pouch-site-header__account-link,
+    .pouch-site-header__icons .pouch-site-header__cart-link,
+    .pouch-site-header__icons .pouch-site-header__lang-toggle {
+      font-size: 0.92rem;
     }
   }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var header = document.querySelector('.pouch-site-header');
-    if (!header) return;
-    var menuButton = header.querySelector('[data-pouch-header-menu]');
-    if (!menuButton) return;
-    menuButton.addEventListener('click', function () {
-      header.classList.toggle('is-menu-open');
-    });
-  });
-</script>
 
 <div class="pouch-site-header">
   {%- assign announcement_blocks = section.blocks | where: 'type', 'announcement' -%}
@@ -341,37 +334,19 @@
       {%- endif -%}
     </a>
 
-    <nav class="pouch-site-header__nav" aria-label="Main navigation">
-      <a href="{{ routes.all_products_collection_url }}">Shop</a>
-      <a href="/pages/magda-linette.html">Pouch X Magda</a>
-      <a href="/pages/about-us.html">About</a>
-      <a href="/blogs/101.html">Pouch 101</a>
-      <a href="/pages/frequently-asked-questions.html">FAQs</a>
-    </nav>
-
     <div class="pouch-site-header__icons">
-      <a href="{{ routes.search_url }}" class="pouch-site-header__icon" aria-label="Search">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"></circle>
-          <path d="M16.25 16.25L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-        </svg>
+      <a href="{{ routes.search_url }}" class="pouch-site-header__icon-link" aria-label="Search">
+        <span class="pouch-site-header__search-label">Search_</span>
       </a>
-      <button
-        class="pouch-site-header__menu-button pouch-site-header__mobile-nav"
-        type="button"
-        data-pouch-header-menu
-        aria-label="Toggle navigation"
-      >
-        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 6.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-          <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-          <path d="M4 17.5H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-        </svg>
-      </button>
-      <a href="{{ routes.cart_url }}" aria-label="Cart">[{{ cart.item_count }}]</a>
-      {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      <a href="{{ routes.account_url }}" class="pouch-site-header__account-link" aria-label="Account">
+        <span class="pouch-site-header__account-label">Account</span>
+      </a>
+      {%- if localization.available_languages.size > 1 -%}
         <details>
-          <summary style="cursor:pointer; list-style:none;">en •</summary>
+          <summary class="pouch-site-header__lang-toggle" style="cursor:pointer; list-style:none;">
+            <span class="pouch-site-header__lang-label">EN</span>
+            <span class="pouch-site-header__lang-dot" aria-hidden="true"></span>
+          </summary>
           <div style="position:absolute; right:1.6rem; top:100%; background:#111427; padding:1.2rem; border:1px solid rgba(255,255,255,.12); border-radius:1rem; min-width:18rem; margin-top:1rem; z-index:4;">
             {%- if localization.available_countries.size > 1 -%}
               {%- form 'localization', id: 'PouchHeaderCountryForm', class: 'localization-form' -%}
@@ -392,17 +367,11 @@
           </div>
         </details>
       {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="pouch-site-header__cart-link" aria-label="Cart">
+        <span class="pouch-site-header__cart-label">Bag</span>
+        <span class="pouch-site-header__cart-count">[{{ cart.item_count }}]</span>
+      </a>
     </div>
-  </div>
-  <div class="pouch-site-header__drawer">
-    <nav aria-label="Mobile navigation">
-      <a href="{{ routes.all_products_collection_url }}">Shop</a>
-      <a href="/pages/magda-linette.html">Pouch X Magda</a>
-      <a href="/pages/about-us.html">About</a>
-      <a href="/blogs/101.html">Pouch 101</a>
-      <a href="/pages/frequently-asked-questions.html">FAQs</a>
-      <a href="{{ routes.account_url }}">Account</a>
-    </nav>
   </div>
 </div>
 

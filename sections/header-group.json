@@ -2,25 +2,28 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
+    "header": {
+      "type": "header",
       "blocks": {
-        "announcement-bar-0": {
+        "header-announcement-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
+            "text": "FREE SHIPPING ON ORDERS OVER $100",
+            "link": ""
+          }
+        },
+        "header-announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "MOTHER'S DAY OFFER ON SKINREVIVE+ • USE CODE REVIVE15",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
-      ]
-    },
-    "header": {
-      "type": "header",
+        "header-announcement-0",
+        "header-announcement-1"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "logo_position": "middle-left",
@@ -38,7 +41,6 @@
     }
   },
   "order": [
-    "announcement-bar",
     "header"
   ]
 }
