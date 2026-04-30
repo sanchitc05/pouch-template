@@ -321,10 +321,16 @@
 </script>
 
 <div class="pouch-site-header">
-  <div class="pouch-site-header__announcement" aria-label="Promotions">
-    <span>Free shipping on orders over $100</span>
-    <span>Mother’s Day Offer on SkinRevive+ • Use code REVIVE15</span>
-  </div>
+  {%- assign announcement_blocks = section.blocks | where: 'type', 'announcement' -%}
+  {%- if announcement_blocks.size > 0 -%}
+    <div class="pouch-site-header__announcement" aria-label="Promotions">
+      {%- for block in announcement_blocks -%}
+        {%- if block.settings.text != blank -%}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
   <div class="pouch-site-header__bar">
     <a class="pouch-site-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
       {%- if settings.logo != blank -%}
@@ -934,6 +940,19 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "Announcement text"
+        }
+      ]
     }
   ]
 }
