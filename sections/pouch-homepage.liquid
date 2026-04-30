@@ -323,32 +323,64 @@
   }
 
   .pouch-product-card {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid var(--pouch-border);
-    border-radius: 2rem;
+    background: #f5f5f5;
+    border: 1px solid rgba(16, 20, 42, 0.08);
+    border-radius: 1.6rem;
     overflow: clip;
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    position: relative;
+  }
+
+  .pouch-product-card__badges {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .pouch-product-card__badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.2rem;
+    padding: 0.2rem 1rem;
+    border-radius: 0.5rem;
+    background: var(--badge-bg, #f0de66);
+    color: #102942;
+    font-family: var(--font-mono, monospace);
+    font-size: 1.12rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .pouch-product-card__media {
-    aspect-ratio: 1 / 1.15;
-    background: linear-gradient(180deg, rgba(37, 46, 84, 0.08), rgba(17, 20, 34, 0.02));
+    aspect-ratio: 1 / 0.88;
+    background: #efefef;
     overflow: hidden;
   }
 
   .pouch-product-card__media img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center bottom;
     display: block;
+    padding: 2.6rem 2.4rem 0.8rem;
   }
 
   .pouch-product-card__body {
-    padding: 1.8rem 1.7rem 1.6rem;
+    padding: 0.8rem 1.35rem 1.3rem;
     display: grid;
-    gap: 1rem;
+    gap: 0.9rem;
     flex: 1;
   }
 
@@ -361,40 +393,52 @@
 
   .pouch-product-card__name {
     margin: 0;
-    font-size: 2.7rem;
+    font-size: 4rem;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
   }
 
   .pouch-product-card__size {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-family: var(--font-mono, monospace);
-    opacity: 0.78;
+    opacity: 0.9;
+    line-height: 1;
+    padding-top: 0.2rem;
   }
 
   .pouch-product-card__tagline {
     margin: 0;
-    font-size: 1.55rem;
-    line-height: 1.45;
-    color: var(--pouch-muted);
+    font-size: 1.14rem;
+    line-height: 1.4;
+    color: #102942;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono, monospace);
   }
 
   .pouch-product-card__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    font-size: 1rem;
-    letter-spacing: 0.12em;
+    gap: 1.4rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     font-family: var(--font-mono, monospace);
-    opacity: 0.8;
+    color: #2b3f57;
+    opacity: 1;
   }
 
   .pouch-product-card__ingredients {
-    font-size: 1.18rem;
+    margin: 0;
+    font-size: 1.02rem;
     line-height: 1.6;
-    color: var(--pouch-muted);
-    min-height: 4.8rem;
+    color: #102942;
+    min-height: 5.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-mono, monospace);
   }
 
   .pouch-product-card__footer {
@@ -791,167 +835,107 @@
       </div>
 
       <div class="pouch-products__grid">
-        <article class="pouch-product-card">
-          {%- assign card_product = all_products.immunity -%}
-          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/immunity.html' }}">
-            <div class="pouch-product-card__media">
-              {%- if card_product.featured_image != blank -%}
-                {{
-                  card_product.featured_image
-                  | image_url: width: 900
-                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
-                }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
-            </div>
-            <div class="pouch-product-card__body">
-              <p class="pouch-eyebrow" style="margin-bottom: 0;">Raspberry Ginger</p>
-              <div class="pouch-product-card__line">
-                <div>
-                  <h3 class="pouch-product-card__name">Immunity+</h3>
-                  <p class="pouch-product-card__tagline">Strengthen, Defend, Thrive</p>
-                </div>
-                <div class="pouch-product-card__size">8.0 oz</div>
-              </div>
-              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
-              <p class="pouch-product-card__ingredients">
-                VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /
-              </p>
-            </div>
-          </a>
-          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
-            <div class="pouch-product-card__footer">
-              {%- form 'product', card_product, class: 'product-form' -%}
-                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
-                  Add to cart
-                </button>
-              {%- endform -%}
-            </div>
-          {%- endif -%}
-        </article>
+        {%- for i in (1..4) -%}
+          {%- liquid
+            assign product_key = 'product_' | append: i
+            assign flavor_key = 'flavor_' | append: i
+            assign flavor_color_key = 'flavor_color_' | append: i
+            assign promo_key = 'promo_badge_' | append: i
+            assign promo_color_key = 'promo_color_' | append: i
+            assign title_key = 'title_' | append: i
+            assign tagline_key = 'tagline_' | append: i
+            assign size_key = 'size_' | append: i
+            assign meta_left_key = 'meta_left_' | append: i
+            assign meta_right_key = 'meta_right_' | append: i
+            assign ingredients_key = 'ingredients_' | append: i
 
-        <article class="pouch-product-card">
-          {%- assign card_product = all_products.hydration -%}
-          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/hydration.html' }}">
-            <div class="pouch-product-card__media">
-              {%- if card_product.featured_image != blank -%}
-                {{
-                  card_product.featured_image
-                  | image_url: width: 900
-                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
-                }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
-            </div>
-            <div class="pouch-product-card__body">
-              <p class="pouch-eyebrow" style="margin-bottom: 0;">Lemon</p>
-              <div class="pouch-product-card__line">
-                <div>
-                  <h3 class="pouch-product-card__name">Hydration+</h3>
-                  <p class="pouch-product-card__tagline">Cellular Replenishment Formula</p>
-                </div>
-                <div class="pouch-product-card__size">8.0 oz</div>
-              </div>
-              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
-              <p class="pouch-product-card__ingredients">Aquamin™ / Essential Electrolytes / Vitamin C /</p>
-            </div>
-          </a>
-          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
-            <div class="pouch-product-card__footer">
-              {%- form 'product', card_product, class: 'product-form' -%}
-                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
-                  Add to cart
-                </button>
-              {%- endform -%}
-            </div>
-          {%- endif -%}
-        </article>
+            assign card_product = section.settings[product_key]
+            if card_product == blank
+              case i
+                when 1
+                  assign card_product = all_products.immunity
+                when 2
+                  assign card_product = all_products.hydration
+                when 3
+                  assign card_product = all_products.skinrevive
+                when 4
+                  assign card_product = all_products.welldrip
+              endcase
+            endif
 
-        <article class="pouch-product-card">
-          {%- assign card_product = all_products.skinrevive -%}
-          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/skinrevive.html' }}">
-            <div class="pouch-product-card__media">
-              {%- if card_product.featured_image != blank -%}
-                {{
-                  card_product.featured_image
-                  | image_url: width: 900
-                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
-                }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
-            </div>
-            <div class="pouch-product-card__body">
-              <p class="pouch-eyebrow" style="margin-bottom: 0;">Peach Chamomile</p>
-              <div class="pouch-product-card__line">
-                <div>
-                  <h3 class="pouch-product-card__name">SkinRevive+</h3>
-                  <p class="pouch-product-card__tagline">Complexion Care Formula</p>
-                </div>
-                <div class="pouch-product-card__size">8.0 oz</div>
-              </div>
-              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
-              <p class="pouch-product-card__ingredients">
-                Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins /
-              </p>
-            </div>
-          </a>
-          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
-            <div class="pouch-product-card__footer">
-              {%- form 'product', card_product, class: 'product-form' -%}
-                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
-                  Add to cart
-                </button>
-              {%- endform -%}
-            </div>
-          {%- endif -%}
-        </article>
+            assign card_flavor = section.settings[flavor_key]
+            assign card_flavor_color = section.settings[flavor_color_key]
+            assign card_promo = section.settings[promo_key]
+            assign card_promo_color = section.settings[promo_color_key]
 
-        <article class="pouch-product-card">
-          {%- assign card_product = all_products.welldrip -%}
-          <a class="pouch-card-link" href="{{ card_product.url | default: '/products/welldrip.html' }}">
-            <div class="pouch-product-card__media">
-              {%- if card_product.featured_image != blank -%}
-                {{
-                  card_product.featured_image
-                  | image_url: width: 900
-                  | image_tag: loading: 'lazy', class: 'image-cover', alt: card_product.title
-                }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            assign card_title = section.settings[title_key]
+            if card_title == blank and card_product != blank
+              assign card_title = card_product.title
+            endif
+
+            assign card_tagline = section.settings[tagline_key]
+            assign card_size = section.settings[size_key]
+            assign card_meta_left = section.settings[meta_left_key]
+            assign card_meta_right = section.settings[meta_right_key]
+            assign card_ingredients = section.settings[ingredients_key]
+          -%}
+
+          <article class="pouch-product-card">
+            <div class="pouch-product-card__badges">
+              {%- if card_flavor != blank -%}
+                <span class="pouch-product-card__badge" style="--badge-bg: {{ card_flavor_color }};">
+                  {{- card_flavor -}}
+                </span>
+              {%- endif -%}
+              {%- if card_promo != blank -%}
+                <span class="pouch-product-card__badge" style="--badge-bg: {{ card_promo_color }};">
+                  {{- card_promo -}}
+                </span>
               {%- endif -%}
             </div>
-            <div class="pouch-product-card__body">
-              <p class="pouch-eyebrow" style="margin-bottom: 0;">Orange Honey</p>
-              <div class="pouch-product-card__line">
-                <div>
-                  <h3 class="pouch-product-card__name">WellDrip+</h3>
-                  <p class="pouch-product-card__tagline">All-in-One Wellness Formula</p>
-                </div>
-                <div class="pouch-product-card__size">8.0 oz</div>
+
+            <a class="pouch-card-link" href="{{ card_product.url | default: routes.all_products_collection_url }}">
+              <div class="pouch-product-card__media">
+                {%- if card_product != blank and card_product.featured_image != blank -%}
+                  {{
+                    card_product.featured_image
+                    | image_url: width: 900
+                    | image_tag: loading: 'lazy', class: 'image-cover', alt: card_title
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
               </div>
-              <div class="pouch-product-card__meta"><span>0G Sugar</span><span>5 CALORIES</span></div>
-              <p class="pouch-product-card__ingredients">
-                Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc /
-              </p>
-            </div>
-          </a>
-          {%- if card_product != blank and card_product.selected_or_first_available_variant != blank -%}
-            <div class="pouch-product-card__footer">
-              {%- form 'product', card_product, class: 'product-form' -%}
-                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="button button--secondary button--block pouch-product-card__button">
-                  Add to cart
-                </button>
-              {%- endform -%}
-            </div>
-          {%- endif -%}
-        </article>
+              <div class="pouch-product-card__body">
+                <div class="pouch-product-card__line">
+                  <div>
+                    <h3 class="pouch-product-card__name">{{ card_title }}</h3>
+                    <p class="pouch-product-card__tagline">{{ card_tagline }}</p>
+                  </div>
+                  <div class="pouch-product-card__size">{{ card_size }}</div>
+                </div>
+                <div class="pouch-product-card__meta">
+                  <span>{{ card_meta_left }}</span><span>{{ card_meta_right }}</span>
+                </div>
+                <p class="pouch-product-card__ingredients">{{ card_ingredients }}</p>
+              </div>
+            </a>
+
+            {%- if section.settings.show_card_add_to_cart
+              and card_product != blank
+              and card_product.selected_or_first_available_variant != blank
+            -%}
+              <div class="pouch-product-card__footer">
+                {%- form 'product', card_product, class: 'product-form' -%}
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="button button--secondary button--block pouch-product-card__button">
+                    Add to cart
+                  </button>
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -1185,6 +1169,285 @@
       "id": "menu",
       "default": "main-menu",
       "label": "Navigation menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_add_to_cart",
+      "label": "Show add to cart button on product cards",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Product card 1"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "flavor_1",
+      "label": "Top left badge",
+      "default": "Raspberry Ginger"
+    },
+    {
+      "type": "color",
+      "id": "flavor_color_1",
+      "label": "Top left badge color",
+      "default": "#ee7882"
+    },
+    {
+      "type": "text",
+      "id": "promo_badge_1",
+      "label": "Top right badge"
+    },
+    {
+      "type": "color",
+      "id": "promo_color_1",
+      "label": "Top right badge color",
+      "default": "#1e3bd8"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Title",
+      "default": "Immunity+"
+    },
+    {
+      "type": "text",
+      "id": "tagline_1",
+      "label": "Tagline",
+      "default": "Strengthen, Defend, Thrive"
+    },
+    {
+      "type": "text",
+      "id": "size_1",
+      "label": "Size",
+      "default": "8.0 oz"
+    },
+    {
+      "type": "text",
+      "id": "meta_left_1",
+      "label": "Meta left",
+      "default": "0G SUGAR"
+    },
+    {
+      "type": "text",
+      "id": "meta_right_1",
+      "label": "Meta right",
+      "default": "5 CALORIES"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_1",
+      "label": "Ingredients line",
+      "default": "VitAlign / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /"
+    },
+    {
+      "type": "header",
+      "content": "Product card 2"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "flavor_2",
+      "label": "Top left badge",
+      "default": "Lemon"
+    },
+    {
+      "type": "color",
+      "id": "flavor_color_2",
+      "label": "Top left badge color",
+      "default": "#efe451"
+    },
+    {
+      "type": "text",
+      "id": "promo_badge_2",
+      "label": "Top right badge"
+    },
+    {
+      "type": "color",
+      "id": "promo_color_2",
+      "label": "Top right badge color",
+      "default": "#1e3bd8"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Title",
+      "default": "Hydration+"
+    },
+    {
+      "type": "text",
+      "id": "tagline_2",
+      "label": "Tagline",
+      "default": "Cellular Replenishment Formula"
+    },
+    {
+      "type": "text",
+      "id": "size_2",
+      "label": "Size",
+      "default": "8.0 oz"
+    },
+    {
+      "type": "text",
+      "id": "meta_left_2",
+      "label": "Meta left",
+      "default": "0G SUGAR"
+    },
+    {
+      "type": "text",
+      "id": "meta_right_2",
+      "label": "Meta right",
+      "default": "5 CALORIES"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_2",
+      "label": "Ingredients line",
+      "default": "Aquamin / Essential Electrolytes / Vitamin C /"
+    },
+    {
+      "type": "header",
+      "content": "Product card 3"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "flavor_3",
+      "label": "Top left badge",
+      "default": "Peach Chamomile"
+    },
+    {
+      "type": "color",
+      "id": "flavor_color_3",
+      "label": "Top left badge color",
+      "default": "#f3bb82"
+    },
+    {
+      "type": "text",
+      "id": "promo_badge_3",
+      "label": "Top right badge",
+      "default": "Mother's Day"
+    },
+    {
+      "type": "color",
+      "id": "promo_color_3",
+      "label": "Top right badge color",
+      "default": "#1e3bd8"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Title",
+      "default": "SkinRevive+"
+    },
+    {
+      "type": "text",
+      "id": "tagline_3",
+      "label": "Tagline",
+      "default": "Complexion Care Formula"
+    },
+    {
+      "type": "text",
+      "id": "size_3",
+      "label": "Size",
+      "default": "8.0 oz"
+    },
+    {
+      "type": "text",
+      "id": "meta_left_3",
+      "label": "Meta left",
+      "default": "0G SUGAR"
+    },
+    {
+      "type": "text",
+      "id": "meta_right_3",
+      "label": "Meta right",
+      "default": "5 CALORIES"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_3",
+      "label": "Ingredients line",
+      "default": "Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins /"
+    },
+    {
+      "type": "header",
+      "content": "Product card 4"
+    },
+    {
+      "type": "product",
+      "id": "product_4",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "flavor_4",
+      "label": "Top left badge",
+      "default": "Orange Honey"
+    },
+    {
+      "type": "color",
+      "id": "flavor_color_4",
+      "label": "Top left badge color",
+      "default": "#f3b038"
+    },
+    {
+      "type": "text",
+      "id": "promo_badge_4",
+      "label": "Top right badge"
+    },
+    {
+      "type": "color",
+      "id": "promo_color_4",
+      "label": "Top right badge color",
+      "default": "#1e3bd8"
+    },
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Title",
+      "default": "WellDrip+"
+    },
+    {
+      "type": "text",
+      "id": "tagline_4",
+      "label": "Tagline",
+      "default": "All-in-One Wellness Formula"
+    },
+    {
+      "type": "text",
+      "id": "size_4",
+      "label": "Size",
+      "default": "8.0 oz"
+    },
+    {
+      "type": "text",
+      "id": "meta_left_4",
+      "label": "Meta left",
+      "default": "0G SUGAR"
+    },
+    {
+      "type": "text",
+      "id": "meta_right_4",
+      "label": "Meta right",
+      "default": "5 CALORIES"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_4",
+      "label": "Ingredients line",
+      "default": "Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc /"
     }
   ],
   "presets": [
