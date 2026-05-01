@@ -373,8 +373,12 @@
       display: inline-flex;
     }
 
+    /* Keep the nav pill visible in narrower preview sizes so
+       the desktop-style tabs remain visible inside the Shopify
+       theme editor (preview iframe can be narrower because of
+       the left inspector panel). */
     .pouch-site-header__nav-pill {
-      display: none;
+      display: flex;
     }
 
     .header__utilities {
