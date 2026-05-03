@@ -694,52 +694,25 @@
       </div>
 
       <div class="pouch-products__grid">
-        {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
           {%- liquid
-            assign product_key = 'product_' | append: i
-            assign flavor_key = 'flavor_' | append: i
-            assign flavor_color_key = 'flavor_color_' | append: i
-            assign promo_key = 'promo_badge_' | append: i
-            assign promo_color_key = 'promo_color_' | append: i
-            assign title_key = 'title_' | append: i
-            assign tagline_key = 'tagline_' | append: i
-            assign size_key = 'size_' | append: i
-            assign meta_left_key = 'meta_left_' | append: i
-            assign meta_right_key = 'meta_right_' | append: i
-            assign ingredients_key = 'ingredients_' | append: i
-
-            assign card_product = section.settings[product_key]
-            if card_product == blank
-              case i
-                when 1
-                  assign card_product = all_products.immunity
-                when 2
-                  assign card_product = all_products.hydration
-                when 3
-                  assign card_product = all_products.skinrevive
-                when 4
-                  assign card_product = all_products.welldrip
-              endcase
-            endif
-
-            assign card_flavor = section.settings[flavor_key]
-            assign card_flavor_color = section.settings[flavor_color_key]
-            assign card_promo = section.settings[promo_key]
-            assign card_promo_color = section.settings[promo_color_key]
-
-            assign card_title = section.settings[title_key]
+            assign card_product = block.settings.product
+            assign card_flavor = block.settings.flavor
+            assign card_flavor_color = block.settings.flavor_color
+            assign card_promo = block.settings.promo_badge
+            assign card_promo_color = block.settings.promo_color
+            assign card_title = block.settings.title
             if card_title == blank and card_product != blank
               assign card_title = card_product.title
             endif
-
-            assign card_tagline = section.settings[tagline_key]
-            assign card_size = section.settings[size_key]
-            assign card_meta_left = section.settings[meta_left_key]
-            assign card_meta_right = section.settings[meta_right_key]
-            assign card_ingredients = section.settings[ingredients_key]
+            assign card_tagline = block.settings.tagline
+            assign card_size = block.settings.size
+            assign card_meta_left = block.settings.meta_left
+            assign card_meta_right = block.settings.meta_right
+            assign card_ingredients = block.settings.ingredients
           -%}
 
-          <article class="pouch-product-card">
+          <article class="pouch-product-card" {{ block.shopify_attributes }}>
             <div class="pouch-product-card__badges">
               {%- if card_flavor != blank -%}
                 <span class="pouch-product-card__badge" style="--badge-bg: {{ card_flavor_color }};">
@@ -1043,284 +1016,140 @@
       "id": "show_card_add_to_cart",
       "label": "Show add to cart button on product cards",
       "default": false
-    },
-    {
-      "type": "header",
-      "content": "Product card 1"
-    },
+    }
+  ],
+  "blocks": [
     {
       "type": "product",
-      "id": "product_1",
-      "label": "Product"
-    },
-    {
-      "type": "text",
-      "id": "flavor_1",
-      "label": "Top left badge",
-      "default": "Raspberry Ginger"
-    },
-    {
-      "type": "color",
-      "id": "flavor_color_1",
-      "label": "Top left badge color",
-      "default": "#ee7882"
-    },
-    {
-      "type": "text",
-      "id": "promo_badge_1",
-      "label": "Top right badge"
-    },
-    {
-      "type": "color",
-      "id": "promo_color_1",
-      "label": "Top right badge color",
-      "default": "#1e3bd8"
-    },
-    {
-      "type": "text",
-      "id": "title_1",
-      "label": "Title",
-      "default": "Immunity+"
-    },
-    {
-      "type": "text",
-      "id": "tagline_1",
-      "label": "Tagline",
-      "default": "Strengthen, Defend, Thrive"
-    },
-    {
-      "type": "text",
-      "id": "size_1",
-      "label": "Size",
-      "default": "8.0 oz"
-    },
-    {
-      "type": "text",
-      "id": "meta_left_1",
-      "label": "Meta left",
-      "default": "0G SUGAR"
-    },
-    {
-      "type": "text",
-      "id": "meta_right_1",
-      "label": "Meta right",
-      "default": "5 CALORIES"
-    },
-    {
-      "type": "textarea",
-      "id": "ingredients_1",
-      "label": "Ingredients line",
-      "default": "VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /"
-    },
-    {
-      "type": "header",
-      "content": "Product card 2"
-    },
-    {
-      "type": "product",
-      "id": "product_2",
-      "label": "Product"
-    },
-    {
-      "type": "text",
-      "id": "flavor_2",
-      "label": "Top left badge",
-      "default": "Lemon"
-    },
-    {
-      "type": "color",
-      "id": "flavor_color_2",
-      "label": "Top left badge color",
-      "default": "#efe451"
-    },
-    {
-      "type": "text",
-      "id": "promo_badge_2",
-      "label": "Top right badge"
-    },
-    {
-      "type": "color",
-      "id": "promo_color_2",
-      "label": "Top right badge color",
-      "default": "#1e3bd8"
-    },
-    {
-      "type": "text",
-      "id": "title_2",
-      "label": "Title",
-      "default": "Hydration+"
-    },
-    {
-      "type": "text",
-      "id": "tagline_2",
-      "label": "Tagline",
-      "default": "Cellular Replenishment Formula"
-    },
-    {
-      "type": "text",
-      "id": "size_2",
-      "label": "Size",
-      "default": "8.0 oz"
-    },
-    {
-      "type": "text",
-      "id": "meta_left_2",
-      "label": "Meta left",
-      "default": "0G SUGAR"
-    },
-    {
-      "type": "text",
-      "id": "meta_right_2",
-      "label": "Meta right",
-      "default": "5 CALORIES"
-    },
-    {
-      "type": "textarea",
-      "id": "ingredients_2",
-      "label": "Ingredients line",
-      "default": "AquaMin™ / Essential Electrolytes / Vitamin C /"
-    },
-    {
-      "type": "header",
-      "content": "Product card 3"
-    },
-    {
-      "type": "product",
-      "id": "product_3",
-      "label": "Product"
-    },
-    {
-      "type": "text",
-      "id": "flavor_3",
-      "label": "Top left badge",
-      "default": "Peach Chamomile"
-    },
-    {
-      "type": "color",
-      "id": "flavor_color_3",
-      "label": "Top left badge color",
-      "default": "#f3bb82"
-    },
-    {
-      "type": "text",
-      "id": "promo_badge_3",
-      "label": "Top right badge",
-      "default": "Mother's Day"
-    },
-    {
-      "type": "color",
-      "id": "promo_color_3",
-      "label": "Top right badge color",
-      "default": "#1e3bd8"
-    },
-    {
-      "type": "text",
-      "id": "title_3",
-      "label": "Title",
-      "default": "SkinRevive+"
-    },
-    {
-      "type": "text",
-      "id": "tagline_3",
-      "label": "Tagline",
-      "default": "Complexion Care Formula"
-    },
-    {
-      "type": "text",
-      "id": "size_3",
-      "label": "Size",
-      "default": "8.0 oz"
-    },
-    {
-      "type": "text",
-      "id": "meta_left_3",
-      "label": "Meta left",
-      "default": "0G SUGAR"
-    },
-    {
-      "type": "text",
-      "id": "meta_right_3",
-      "label": "Meta right",
-      "default": "5 CALORIES"
-    },
-    {
-      "type": "textarea",
-      "id": "ingredients_3",
-      "label": "Ingredients line",
-      "default": "Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins /"
-    },
-    {
-      "type": "header",
-      "content": "Product card 4"
-    },
-    {
-      "type": "product",
-      "id": "product_4",
-      "label": "Product"
-    },
-    {
-      "type": "text",
-      "id": "flavor_4",
-      "label": "Top left badge",
-      "default": "Orange Honey"
-    },
-    {
-      "type": "color",
-      "id": "flavor_color_4",
-      "label": "Top left badge color",
-      "default": "#f3b038"
-    },
-    {
-      "type": "text",
-      "id": "promo_badge_4",
-      "label": "Top right badge"
-    },
-    {
-      "type": "color",
-      "id": "promo_color_4",
-      "label": "Top right badge color",
-      "default": "#1e3bd8"
-    },
-    {
-      "type": "text",
-      "id": "title_4",
-      "label": "Title",
-      "default": "WellDrip+"
-    },
-    {
-      "type": "text",
-      "id": "tagline_4",
-      "label": "Tagline",
-      "default": "All-in-One Wellness Formula"
-    },
-    {
-      "type": "text",
-      "id": "size_4",
-      "label": "Size",
-      "default": "8.0 oz"
-    },
-    {
-      "type": "text",
-      "id": "meta_left_4",
-      "label": "Meta left",
-      "default": "0G SUGAR"
-    },
-    {
-      "type": "text",
-      "id": "meta_right_4",
-      "label": "Meta right",
-      "default": "5 CALORIES"
-    },
-    {
-      "type": "textarea",
-      "id": "ingredients_4",
-      "label": "Ingredients line",
-      "default": "Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc /"
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "flavor",
+          "label": "Flavor badge",
+          "placeholder": "e.g. Raspberry Ginger"
+        },
+        {
+          "type": "color",
+          "id": "flavor_color",
+          "label": "Flavor badge color",
+          "default": "#ee7882"
+        },
+        {
+          "type": "text",
+          "id": "promo_badge",
+          "label": "Promo badge",
+          "placeholder": "e.g. Mother's Day"
+        },
+        {
+          "type": "color",
+          "id": "promo_color",
+          "label": "Promo badge color",
+          "default": "#1e3bd8"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "placeholder": "Leave blank to use product title"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline",
+          "placeholder": "e.g. Strengthen, Defend, Thrive"
+        },
+        {
+          "type": "text",
+          "id": "size",
+          "label": "Size",
+          "default": "8.0 oz"
+        },
+        {
+          "type": "text",
+          "id": "meta_left",
+          "label": "Left meta info",
+          "default": "0G SUGAR"
+        },
+        {
+          "type": "text",
+          "id": "meta_right",
+          "label": "Right meta info",
+          "default": "5 CALORIES"
+        },
+        {
+          "type": "textarea",
+          "id": "ingredients",
+          "label": "Ingredients",
+          "placeholder": "e.g. Vitamin C / Magnesium / Zinc"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "POUCH homepage"
+      "name": "POUCH homepage",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Raspberry Ginger",
+            "flavor_color": "#ee7882",
+            "title": "Immunity+",
+            "tagline": "Strengthen, Defend, Thrive",
+            "size": "8.0 oz",
+            "meta_left": "0G SUGAR",
+            "meta_right": "5 CALORIES",
+            "ingredients": "VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Lemon",
+            "flavor_color": "#efe451",
+            "title": "Hydration+",
+            "tagline": "Cellular Replenishment Formula",
+            "size": "8.0 oz",
+            "meta_left": "0G SUGAR",
+            "meta_right": "5 CALORIES",
+            "ingredients": "AquaMin™ / Essential Electrolytes / Vitamin C"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Peach Chamomile",
+            "flavor_color": "#f3bb82",
+            "promo_badge": "Mother's Day",
+            "promo_color": "#1e3bd8",
+            "title": "SkinRevive+",
+            "tagline": "Complexion Care Formula",
+            "size": "8.0 oz",
+            "meta_left": "0G SUGAR",
+            "meta_right": "5 CALORIES",
+            "ingredients": "Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Orange Honey",
+            "flavor_color": "#f3b038",
+            "title": "WellDrip+",
+            "tagline": "All-in-One Wellness Formula",
+            "size": "8.0 oz",
+            "meta_left": "0G SUGAR",
+            "meta_right": "5 CALORIES",
+            "ingredients": "Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc"
+          }
+        }
+      ]
     }
   ]
 }
