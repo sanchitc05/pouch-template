@@ -1,0 +1,486 @@
+<style>
+  :root {
+    --pouch-off-white: #f8f7f4;
+    --pouch-charcoal: #1a1a1a;
+    --pouch-navy: #1b2fbf;
+    --pouch-gray-muted: #8e8e8e;
+    --pouch-gray-light: #f1f1f1;
+    --pouch-white: #ffffff;
+    --pouch-radius: 20px;
+    --pouch-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .pouch-redesign {
+    background-color: var(--pouch-white);
+    color: var(--pouch-charcoal);
+    font-family: var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Announcement Bars */
+  .pouch-announcement-wrapper {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .pouch-announcement--top {
+    background: var(--pouch-charcoal);
+    color: var(--pouch-white);
+    padding: 10px 0;
+  }
+
+  .pouch-announcement--secondary {
+    background: #f4e8e1; /* Champagne/Blush tone */
+    color: var(--pouch-charcoal);
+    padding: 8px 0;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Navigation */
+  .pouch-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  .pouch-nav__links {
+    display: flex;
+    gap: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .pouch-nav__link {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .pouch-nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--pouch-charcoal);
+    transition: width 0.3s ease;
+  }
+
+  .pouch-nav__link:hover::after {
+    width: 100%;
+  }
+
+  .pouch-nav__right {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+  }
+
+  /* Grid Layout */
+  .pouch-grid-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  .pouch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  /* Product Card */
+  .pouch-card {
+    background: var(--pouch-off-white);
+    border-radius: var(--pouch-radius);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: var(--pouch-transition);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .pouch-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pouch-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+
+  .pouch-card__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Badges */
+  .pouch-card__badges {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .pouch-badge {
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .pouch-badge--flavor {
+    background-color: var(--badge-bg);
+  }
+
+  .pouch-badge--featured {
+    background-color: #1B2FBF; /* Cobalt Blue */
+    color: white;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Media */
+  .pouch-card__media {
+    padding-top: 40px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .pouch-card__image {
+    max-height: 240px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 2;
+  }
+
+  .pouch-card:hover .pouch-card__image {
+    transform: scale(1.04);
+  }
+
+  .pouch-card__shadow {
+    position: absolute;
+    bottom: 40px;
+    width: 60px;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(4px);
+    z-index: 1;
+  }
+
+  /* Content */
+  .pouch-card__content {
+    padding: 0 24px 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .pouch-card:hover .pouch-card__content {
+    transform: translateY(-20px);
+  }
+
+  .pouch-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .pouch-card__title {
+    margin: 0;
+    font-family: var(--font-heading-family), serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--pouch-charcoal);
+    letter-spacing: -0.02em;
+  }
+
+  .pouch-card__size {
+    font-size: 11px;
+    font-variant: all-small-caps;
+    font-weight: 300;
+    color: var(--pouch-gray-muted);
+  }
+
+  .pouch-card__tagline {
+    margin: 0 0 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--pouch-gray-muted);
+  }
+
+  .pouch-card__ingredients-wrapper {
+    margin-top: auto;
+    position: relative;
+    max-height: 2.8em;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .pouch-card:hover .pouch-card__ingredients-wrapper {
+    max-height: 100px;
+  }
+
+  .pouch-card__ingredients {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--pouch-gray-muted);
+  }
+
+  /* Add to Cart Button */
+  .pouch-card__footer {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 5;
+  }
+
+  .pouch-card:hover .pouch-card__footer {
+    transform: translateY(0);
+  }
+
+  .pouch-button {
+    width: 100%;
+    height: 56px;
+    border: none;
+    background: var(--pouch-navy);
+    color: var(--pouch-white);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .pouch-button:hover {
+    background: #2538d6; /* Slightly lighter blue */
+  }
+
+  .pouch-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.8s;
+  }
+
+  .pouch-button:hover::before {
+    left: 150%;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .pouch-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .pouch-grid {
+      grid-template-columns: 1fr;
+    }
+    .pouch-card__footer {
+      height: 54px;
+      position: static;
+      transform: none;
+    }
+    .pouch-nav__links {
+      display: none;
+    }
+  }
+
+</style>
+
+<div class="pouch-redesign">
+  <!-- Announcement Bars -->
+  <div class="pouch-announcement-wrapper">
+    <div class="pouch-announcement pouch-announcement--top">
+      {{ section.settings.announcement_top }}
+    </div>
+    <div class="pouch-announcement pouch-announcement--secondary">
+      {{ section.settings.announcement_bottom }}
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="pouch-nav">
+    <div class="pouch-nav__logo">
+      <h2 style="margin:0; font-family:serif; letter-spacing:-0.05em;">POUCH</h2>
+    </div>
+    <div class="pouch-nav__links">
+      <a href="{{ collections['products'].url | default: routes.all_products_collection_url }}" class="pouch-nav__link">SHOP</a>
+      <a href="{{ pages['pouch-x-magda'].url | default: '/pages/pouch-x-magda' }}" class="pouch-nav__link">POUCH X MAGDA</a>
+      <a href="{{ pages['about-us'].url | default: '/pages/about-us' }}" class="pouch-nav__link">ABOUT</a>
+      <a href="{{ blogs['101'].url | default: '/blogs/101' }}" class="pouch-nav__link">POUCH 101</a>
+      <a href="{{ pages['faqs'].url | default: '/pages/faqs' }}" class="pouch-nav__link">FAQS</a>
+    </div>
+    <div class="pouch-nav__right">
+      <a href="{{ routes.search_url }}" class="pouch-nav__link">SEARCH</a>
+      <span>{{ localization.language.iso_code | upcase }}</span>
+      <a href="{{ routes.account_url }}" class="pouch-nav__link">ACCOUNT</a>
+      <a href="{{ routes.cart_url }}" class="pouch-nav__link">BAG [{{ cart.item_count }}]</a>
+    </div>
+  </nav>
+
+  <!-- Product Grid -->
+  <div class="pouch-grid-container">
+    <div class="pouch-grid">
+      {% for block in section.blocks %}
+        <div class="pouch-card-wrapper" style="--index: {{ forloop.index0 }}">
+          {% render 'pouch-redesign-card',
+            product: block.settings.product,
+            flavor: block.settings.flavor,
+            flavor_color: block.settings.flavor_color,
+            is_featured: block.settings.is_featured,
+            tagline: block.settings.tagline,
+            ingredients: block.settings.ingredients,
+            custom_image: block.settings.custom_image
+          %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.pouch-card');
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.add('is-visible');
+      }, index * 100);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "POUCH Redesign Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_top",
+      "label": "Top Announcement",
+      "default": "FREE SHIPPING ON ORDERS OVER $100"
+    },
+    {
+      "type": "text",
+      "id": "announcement_bottom",
+      "label": "Secondary Announcement",
+      "default": "MOTHER'S DAY OFFER ON SKINREVIVE+ - USE CODE REVIVE15"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "flavor", "label": "Flavor Tag" },
+        { "type": "color", "id": "flavor_color", "label": "Flavor Color" },
+        { "type": "text", "id": "tagline", "label": "Tagline" },
+        { "type": "textarea", "id": "ingredients", "label": "Ingredients" },
+        { "type": "checkbox", "id": "is_featured", "label": "Mother's Day Featured", "default": false },
+        { "type": "text", "id": "custom_image", "label": "Custom Image Filename (in Assets)", "info": "e.g. pouch_immunity_raspberry_ginger.png" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "POUCH Redesign Grid",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Raspberry Ginger",
+            "flavor_color": "#FFC0CB",
+            "tagline": "Strengthen, Defend, Thrive",
+            "ingredients": "VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3",
+            "custom_image": "pouch_immunity_raspberry_ginger.png"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Lemon",
+            "flavor_color": "#FFF4A3",
+            "tagline": "Cellular Replenishment Formula",
+            "ingredients": "AquaMin™ / Essential Electrolytes / Vitamin C / No Sugar / 5 Calories",
+            "custom_image": "pouch_hydration_lemon.png"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Peach Chamomile",
+            "flavor_color": "#FFDAB9",
+            "tagline": "Complexion Care Formula",
+            "ingredients": "Hyaluronic Acid / Glutathione / Vitamin E / Magnesium / Vitamin C / B-Complex Vitamins",
+            "is_featured": true,
+            "custom_image": "pouch_skinrevive_peach_chamomile.png"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "flavor": "Orange Honey",
+            "flavor_color": "#FFCC00",
+            "tagline": "All-in-One Wellness Formula",
+            "ingredients": "Vitamin C / Glutathione / Selenium / Magnesium / B-Complex Vitamins / Zinc",
+            "custom_image": "pouch_welldrip_orange_honey.png"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

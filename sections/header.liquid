@@ -441,6 +441,12 @@
       </a>
     </div>
 
+    {%- liquid
+      assign magda_url = pages['magda-linette'].url | default: '/pages/magda-linette'
+      assign about_url = pages['about-us'].url | default: '/pages/about-us'
+      assign faq_url = pages['frequently-asked-questions'].url | default: '/pages/frequently-asked-questions'
+    -%}
+
     <div class="pouch-site-header__nav-pill">
       <nav class="pouch-site-header__nav" aria-label="Primary">
         <a
@@ -449,17 +455,17 @@
           >SHOP</a
         >
         <a
-          href="/pages/magda-linette.html"
-          class="pouch-site-header__nav-link{% if request.path == '/pages/magda-linette.html' %} active{% endif %}"
-          {% if request.path == '/pages/magda-linette.html' %}
+          href="{{ magda_url }}"
+          class="pouch-site-header__nav-link{% if request.path == magda_url %} active{% endif %}"
+          {% if request.path == magda_url %}
             aria-current="page"
           {% endif %}
           >POUCH X MAGDA</a
         >
         <a
-          href="/pages/about-us.html"
-          class="pouch-site-header__nav-link{% if request.path == '/pages/about-us.html' %} active{% endif %}"
-          {% if request.path == '/pages/about-us.html' %}
+          href="{{ about_url }}"
+          class="pouch-site-header__nav-link{% if request.path == about_url %} active{% endif %}"
+          {% if request.path == about_url %}
             aria-current="page"
           {% endif %}
           >ABOUT</a
@@ -473,9 +479,9 @@
           >POUCH 101</a
         >
         <a
-          href="/pages/frequently-asked-questions.html"
-          class="pouch-site-header__nav-link{% if request.path == '/pages/frequently-asked-questions.html' %} active{% endif %}"
-          {% if request.path == '/pages/frequently-asked-questions.html' %}
+          href="{{ faq_url }}"
+          class="pouch-site-header__nav-link{% if request.path == faq_url %} active{% endif %}"
+          {% if request.path == faq_url %}
             aria-current="page"
           {% endif %}
           >FAQS</a

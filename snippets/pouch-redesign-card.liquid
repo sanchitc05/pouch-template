@@ -1,0 +1,102 @@
+{% comment %}
+  Renders a redesigned product card for POUCH Drinks.
+  Accepts:
+  - product: {Object} Product object
+  - flavor: {String} Flavor text
+  - flavor_color: {String} Flavor accent color
+  - is_featured: {Boolean} Whether this is a featured product (e.g. Mother's Day)
+  - tagline: {String} Subtitle tagline
+  - ingredients: {String} Ingredient list
+  - custom_image: {String} Optional custom image filename in assets
+{% endcomment %}
+
+{%- liquid
+  assign card_image_name = custom_image
+  if card_image_name == blank
+    case flavor
+      when 'Raspberry Ginger'
+        assign card_image_name = 'pouch_immunity_raspberry_ginger.png'
+      when 'Lemon'
+        assign card_image_name = 'pouch_hydration_lemon.png'
+      when 'Peach Chamomile'
+        assign card_image_name = 'pouch_skinrevive_peach_chamomile.png'
+      when 'Orange Honey'
+        assign card_image_name = 'pouch_welldrip_orange_honey.png'
+    endcase
+  endif
+-%}
+
+<div class="pouch-card" data-pouch-card>
+  <div class="pouch-card__inner">
+    <!-- Badges -->
+    <div class="pouch-card__badges">
+      {% if flavor != blank %}
+        <span class="pouch-badge pouch-badge--flavor" style="--badge-bg: {{ flavor_color | default: '#F0DE66' }};">{{ flavor }}</span>
+      {% endif %}
+      {% if is_featured %}
+        <span class="pouch-badge pouch-badge--featured">MOTHER'S DAY</span>
+      {% endif %}
+    </div>
+
+    <!-- Media -->
+    <div class="pouch-card__media">
+      {%- liquid
+        assign card_image_url = nil
+        if card_image_name != blank
+          assign card_image_url = card_image_name | asset_url
+        elsif product.featured_image != blank
+          assign card_image_url = product.featured_image | image_url: width: 600
+        endif
+      -%}
+
+      {% if card_image_url != nil %}
+        <img
+          src="{{ card_image_url }}"
+          alt="{{ product.title | default: flavor }}"
+          width="600"
+          height="600"
+          loading="lazy"
+          class="pouch-card__image"
+        >
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+      <div class="pouch-card__shadow"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="pouch-card__content">
+      <div class="pouch-card__header">
+        <h3 class="pouch-card__title">{{ product.title | default: flavor }}</h3>
+        <span class="pouch-card__size">8.0 OZ</span>
+      </div>
+      
+      <p class="pouch-card__tagline">{{ tagline | default: "Tagline goes here" }}</p>
+
+      <div class="pouch-card__ingredients-wrapper">
+        <p class="pouch-card__ingredients">
+          {{ ingredients | replace: '/', ' / ' | default: "Ingredient / List / Here" }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Add to Cart -->
+    {%- if product != blank and product.selected_or_first_available_variant != blank -%}
+      <div class="pouch-card__footer">
+        <product-form>
+          {%- form 'product', product -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" name="add" class="pouch-button pouch-button--primary">
+              <span>ADD TO CART</span>
+              <div class="loading__spinner hidden">
+                <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                </svg>
+              </div>
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

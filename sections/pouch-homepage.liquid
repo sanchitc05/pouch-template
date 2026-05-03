@@ -153,64 +153,6 @@
     margin-inline: auto;
   }
 
-  .pouch-hero__logo {
-    position: absolute;
-    top: 3.2rem;
-    left: 1.6rem;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: 400;
-    font-size: clamp(4.6rem, 6vw, 7.8rem);
-    line-height: 0.82;
-    letter-spacing: -0.06em;
-  }
-
-  .pouch-hero__topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding: 0.9rem 1.4rem 1.1rem;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: var(--font-mono, monospace);
-    letter-spacing: 0.08em;
-    font-size: 1.05rem;
-    background: rgba(16, 20, 42, 0.55);
-    backdrop-filter: blur(14px);
-  }
-
-  .pouch-hero__icons {
-    position: absolute;
-    top: 3.7rem;
-    right: 1.4rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 1.9rem;
-    font-family: var(--font-mono, monospace);
-    font-size: 1.4rem;
-    letter-spacing: 0.12em;
-  }
-
-  .pouch-hero__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.8rem;
-    height: 2.8rem;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    padding: 0;
-  }
-
-  .pouch-hero__icon svg {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
   .pouch-hero__content {
     display: grid;
     gap: 1.6rem;
@@ -687,18 +629,6 @@
       padding-bottom: 1.8rem;
     }
 
-    .pouch-hero__logo {
-      font-size: 5rem;
-      top: 4rem;
-      left: 0;
-    }
-
-    .pouch-hero__icons {
-      top: 4.35rem;
-      right: 0;
-      gap: 1rem;
-    }
-
     .pouch-hero__content {
       min-height: 74svh;
       padding-top: 12rem;
@@ -745,11 +675,10 @@
           <a class="pouch-link" href="{{ collections['products'].url | default: routes.all_products_collection_url }}">
             Explore the Range <span class="pouch-link__arrow" aria-hidden="true"></span>
           </a>
-          <button class="pouch-link" type="button" aria-disabled="true">Sound: off</button>
         </div>
       </div>
 
-      <p class="pouch-hero__label">Drinkable iv formula™</p>
+      <p class="pouch-hero__label">Drinkable IV Formula™</p>
     </div>
   </header>
 
@@ -884,7 +813,7 @@
           <p class="pouch-copy" style="max-width: 44rem;">
             Science-backed fluids. Real-world performance. Find out how we keep you operating at your peak.
           </p>
-          <a class="pouch-link" href="/pages/about-us.html"
+          <a class="pouch-link" href="{{ pages['about-us'].url | default: '/pages/about-us' }}"
             >Discover our approach <span class="pouch-link__arrow" aria-hidden="true"></span
           ></a>
         </div>
@@ -926,8 +855,8 @@
               </p>
             </div>
           </div>
-          <div class="pouch-products__grid" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
-            {%- assign science_cards = 'skinrevive|SkinRevive+|Complexion Care Formula|products/skinrevive.html,immunity|Immunity+|Strengthen, Defend, Thrive|products/immunity.html,hydration|Hydration+|Cellular Replenishment Formula|products/hydration.html,welldrip|WellDrip+|All-in-One Wellness Formula|products/welldrip.html'
+          <div class="pouch-products__grid pouch-products__grid--science">
+            {%- assign science_cards = 'immunity|Immunity+|Strengthen, Defend, Thrive|/products/immunity,hydration|Hydration+|Cellular Replenishment Formula|/products/hydration,skinrevive|SkinRevive+|Complexion Care Formula|/products/skinrevive,welldrip|WellDrip+|All-in-One Wellness Formula|/products/welldrip'
               | split: ','
             -%}
             {%- for science_card in science_cards -%}
@@ -991,7 +920,7 @@
 
       <div class="pouch-compare">
         <div>
-          <p class="pouch-eyebrow" style="margin-bottom: 0.7rem;">06 / VarietyPack+</p>
+          <p class="pouch-eyebrow" style="margin-bottom: 0.7rem;">05 / VarietyPack+</p>
           <h2 class="pouch-title" style="font-size: clamp(4rem, 4.7vw, 7rem);">One pack. Every formula.</h2>
           <p class="pouch-copy">
             Twelve pouches. Four targeted blends. Your complete supply of hydration, immune support, skin nourishment,
@@ -1002,6 +931,15 @@
           <div class="pouch-compare__head">Formulas</div>
           <div class="pouch-compare__head">Sip</div>
           <div class="pouch-compare__head">Drip</div>
+          <div class="pouch-compare__cell">Format</div>
+          <div class="pouch-compare__cell">Portable, ready-to-drink pouch</div>
+          <div class="pouch-compare__cell">In-clinic IV appointment</div>
+          <div class="pouch-compare__cell">Routine</div>
+          <div class="pouch-compare__cell">Daily wellness support</div>
+          <div class="pouch-compare__cell">Occasional treatment setting</div>
+          <div class="pouch-compare__cell">Access</div>
+          <div class="pouch-compare__cell">No appointment required</div>
+          <div class="pouch-compare__cell">Requires provider administration</div>
         </div>
         <p class="pouch-compare__note">
           *POUCH is a dietary supplement, not a medical treatment. Use as directed or as advised by a healthcare
@@ -1010,7 +948,7 @@
       </div>
 
       <div class="pouch-faqs">
-        <p class="pouch-eyebrow">08 / FAQs</p>
+        <p class="pouch-eyebrow">06 / FAQs</p>
         <details class="pouch-faq" open>
           <summary>How often can I drink POUCH products? <span class="pouch-faq__plus">+</span></summary>
           <div class="pouch-faq__content">
@@ -1048,7 +986,7 @@
 
   <section class="pouch-section">
     <div class="pouch-container pouch-articles">
-      <p class="pouch-eyebrow">09 / Pouch 101</p>
+      <p class="pouch-eyebrow">07 / Pouch 101</p>
       <div class="pouch-articles__grid">
         {%- if pouch_blog != blank and pouch_blog.articles['benefits-drinkable-iv-therapy'] != blank -%}
           {%- assign article_one = pouch_blog.articles['benefits-drinkable-iv-therapy'] -%}
@@ -1172,7 +1110,7 @@
       "type": "textarea",
       "id": "ingredients_1",
       "label": "Ingredients line",
-      "default": "VitAlign / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /"
+      "default": "VitAlign® / Magnesium / Vitamin C / Glutathione / Zinc / B-Complex Vitamins / Selenium / Vitamin D3 /"
     },
     {
       "type": "header",
@@ -1240,7 +1178,7 @@
       "type": "textarea",
       "id": "ingredients_2",
       "label": "Ingredients line",
-      "default": "Aquamin / Essential Electrolytes / Vitamin C /"
+      "default": "AquaMin™ / Essential Electrolytes / Vitamin C /"
     },
     {
       "type": "header",

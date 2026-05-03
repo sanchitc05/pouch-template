@@ -244,9 +244,9 @@
       <details class="pouch-site-footer__column" open>
         <summary>01 / Customer Service <span>+</span></summary>
         <ul>
-          <li><a href="/pages/frequently-asked-questions.html">FAQs</a></li>
-          <li><a href="/pages/delivery-returns.html">Delivery</a></li>
-          <li><a href="/pages/delivery-returns.html">Returns</a></li>
+          <li><a href="{{ pages['frequently-asked-questions'].url | default: '/pages/frequently-asked-questions' }}">FAQs</a></li>
+          <li><a href="{{ pages['delivery-returns'].url | default: '/pages/delivery-returns' }}">Delivery</a></li>
+          <li><a href="{{ pages['delivery-returns'].url | default: '/pages/delivery-returns' }}">Returns</a></li>
           <li><a href="https://drinkpouch.com/tools/recurring/login">Manage Subscriptions</a></li>
         </ul>
       </details>
@@ -254,10 +254,10 @@
       <details class="pouch-site-footer__column" open>
         <summary>02 / Legal <span>+</span></summary>
         <ul>
-          <li><a href="/pages/terms-conditions.html">Terms &amp; Conditions</a></li>
-          <li><a href="/pages/privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="/pages/privacy-policy.html">Cookie Policy</a></li>
-          <li><a href="/pages/contact.html">Contact</a></li>
+          <li><a href="{{ pages['terms-conditions'].url | default: '/pages/terms-conditions' }}">Terms &amp; Conditions</a></li>
+          <li><a href="{{ pages['privacy-policy'].url | default: '/pages/privacy-policy' }}">Privacy Policy</a></li>
+          <li><a href="{{ pages['privacy-policy'].url | default: '/pages/privacy-policy' }}">Cookie Policy</a></li>
+          <li><a href="{{ pages['contact'].url | default: '/pages/contact' }}">Contact</a></li>
         </ul>
       </details>
 
